@@ -6,7 +6,7 @@ class Server
 private:
 
 public:
-    
+
 };
 
 #endif SERVER_HPP_
