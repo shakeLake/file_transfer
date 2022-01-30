@@ -1,5 +1,5 @@
 #!/bin/bash
 clear
-cd client
+cd server
 make
-./start
+./startServer

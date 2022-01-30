@@ -1,12 +1,15 @@
-#include <iostream>
 #include "client.hpp"
 
 int main()
 {
-    // "towel.blinkenlights.nl", "telnet"
-    Client test("towel.blinkenlights.nl", "telnet");
+    Client test("127.0.0.1", "2014");
 
-    test.connect();
+    if (test.connect())
+        std::cout << "Connected" << std::endl;
+
+    std::string name = "Mark";
+    test.send<std::string>(name);
 
     return 0;
 }
+

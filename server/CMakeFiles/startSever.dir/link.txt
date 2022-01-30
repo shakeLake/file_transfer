@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/startSever.dir/main.cpp.o -o startSever  libserverLib.a /usr/lib/libboost_system.so.1.78.0 /usr/lib/libboost_thread.so.1.78.0 -lpthread 

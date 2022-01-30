@@ -12,6 +12,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.22.1/CMakeSystem.cmake"
   "CMakeLists.txt"
   "client/CMakeLists.txt"
+  "server/CMakeLists.txt"
   "/usr/lib64/cmake/Boost-1.78.0/BoostConfig.cmake"
   "/usr/lib64/cmake/Boost-1.78.0/BoostConfigVersion.cmake"
   "/usr/lib64/cmake/BoostDetectToolset-1.78.0.cmake"
@@ -63,10 +64,13 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "client/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "server/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "client/CMakeFiles/client.dir/DependInfo.cmake"
   "client/CMakeFiles/start.dir/DependInfo.cmake"
+  "server/CMakeFiles/serverLib.dir/DependInfo.cmake"
+  "server/CMakeFiles/startServer.dir/DependInfo.cmake"
   )

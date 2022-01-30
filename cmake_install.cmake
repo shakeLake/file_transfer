@@ -45,6 +45,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/mark/Desktop/data/geass/csc/client/cmake_install.cmake")
+  include("/home/mark/Desktop/data/geass/csc/server/cmake_install.cmake")
 
 endif()
 

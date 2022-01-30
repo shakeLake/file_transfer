@@ -1,14 +1,12 @@
 #ifndef CLIENT_HPP_
 #define CLIENT_HPP_
 
-// std::cerr, std::endl
+// std::cerr, std::cout, std::endl
 #include <iostream>
 
 // boost
 #include <boost/asio.hpp>
-
-// header
-#include "client.hpp"
+#include <boost/asio/buffer.hpp>
 
 using namespace boost::asio::ip;
 
@@ -22,14 +20,31 @@ private:
     tcp::socket socket;
     boost::system::error_code ec;
 public:
-    Client(std::string host, std::string protocol) : r(io_context), q(host, protocol), socket(io_context)
+    Client(std::string host, std::string port) : r(io_context), q(host, port), socket(io_context)
     {
         endpoint = r.resolve(q, ec);
     }
 
     bool connect();
 
-    ~Client() {};
+    template<typename T>
+    void send( T );
+
+    void read();
+
+    ~Client() {}
 };
+
+template <typename T>
+void Client::send(T data)
+{
+    boost::asio::write(socket, boost::asio::buffer(data),
+        [](const boost::system::error_code& error, std::size_t bytes_transferred)
+        {
+            std::cout << "Bytes transferred: " << bytes_transferred << std::endl;
+            return bytes_transferred;
+        }
+    ); 
+}
 
 #endif /* CLIENT_HPP_ */

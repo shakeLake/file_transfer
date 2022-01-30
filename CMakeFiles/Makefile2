@@ -64,14 +64,17 @@ CMAKE_BINARY_DIR = /home/mark/Desktop/data/geass/csc
 
 # The main recursive "all" target.
 all: client/all
+all: server/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: client/preinstall
+preinstall: server/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: client/clean
+clean: server/clean
 .PHONY : clean
 
 #=============================================================================
@@ -90,6 +93,23 @@ client/preinstall:
 client/clean: client/CMakeFiles/client.dir/clean
 client/clean: client/CMakeFiles/start.dir/clean
 .PHONY : client/clean
+
+#=============================================================================
+# Directory level rules for directory server
+
+# Recursive "all" directory target.
+server/all: server/CMakeFiles/serverLib.dir/all
+server/all: server/CMakeFiles/startServer.dir/all
+.PHONY : server/all
+
+# Recursive "preinstall" directory target.
+server/preinstall:
+.PHONY : server/preinstall
+
+# Recursive "clean" directory target.
+server/clean: server/CMakeFiles/serverLib.dir/clean
+server/clean: server/CMakeFiles/startServer.dir/clean
+.PHONY : server/clean
 
 #=============================================================================
 # Target rules for target client/CMakeFiles/client.dir
@@ -124,7 +144,7 @@ client/CMakeFiles/client.dir/clean:
 client/CMakeFiles/start.dir/all: client/CMakeFiles/client.dir/all
 	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/depend
 	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=3,4 "Built target start"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=5,6 "Built target start"
 .PHONY : client/CMakeFiles/start.dir/all
 
 # Build rule for subdir invocation for target.
@@ -142,6 +162,58 @@ start: client/CMakeFiles/start.dir/rule
 client/CMakeFiles/start.dir/clean:
 	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/clean
 .PHONY : client/CMakeFiles/start.dir/clean
+
+#=============================================================================
+# Target rules for target server/CMakeFiles/serverLib.dir
+
+# All Build rule for target.
+server/CMakeFiles/serverLib.dir/all:
+	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/depend
+	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=3,4 "Built target serverLib"
+.PHONY : server/CMakeFiles/serverLib.dir/all
+
+# Build rule for subdir invocation for target.
+server/CMakeFiles/serverLib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/CMakeFiles/serverLib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 0
+.PHONY : server/CMakeFiles/serverLib.dir/rule
+
+# Convenience name for target.
+serverLib: server/CMakeFiles/serverLib.dir/rule
+.PHONY : serverLib
+
+# clean rule for target.
+server/CMakeFiles/serverLib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/clean
+.PHONY : server/CMakeFiles/serverLib.dir/clean
+
+#=============================================================================
+# Target rules for target server/CMakeFiles/startServer.dir
+
+# All Build rule for target.
+server/CMakeFiles/startServer.dir/all: server/CMakeFiles/serverLib.dir/all
+	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/startServer.dir/build.make server/CMakeFiles/startServer.dir/depend
+	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/startServer.dir/build.make server/CMakeFiles/startServer.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=7,8 "Built target startServer"
+.PHONY : server/CMakeFiles/startServer.dir/all
+
+# Build rule for subdir invocation for target.
+server/CMakeFiles/startServer.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/CMakeFiles/startServer.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 0
+.PHONY : server/CMakeFiles/startServer.dir/rule
+
+# Convenience name for target.
+startServer: server/CMakeFiles/startServer.dir/rule
+.PHONY : startServer
+
+# clean rule for target.
+server/CMakeFiles/startServer.dir/clean:
+	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/startServer.dir/build.make server/CMakeFiles/startServer.dir/clean
+.PHONY : server/CMakeFiles/startServer.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

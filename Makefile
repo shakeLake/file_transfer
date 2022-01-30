@@ -142,6 +142,32 @@ start/fast:
 	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/build
 .PHONY : start/fast
 
+#=============================================================================
+# Target rules for targets named serverLib
+
+# Build rule for target.
+serverLib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 serverLib
+.PHONY : serverLib
+
+# fast build rule for target.
+serverLib/fast:
+	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/build
+.PHONY : serverLib/fast
+
+#=============================================================================
+# Target rules for targets named startServer
+
+# Build rule for target.
+startServer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 startServer
+.PHONY : startServer
+
+# fast build rule for target.
+startServer/fast:
+	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/startServer.dir/build.make server/CMakeFiles/startServer.dir/build
+.PHONY : startServer/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -151,7 +177,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
+	@echo "... serverLib"
 	@echo "... start"
+	@echo "... startServer"
 .PHONY : help
 
 

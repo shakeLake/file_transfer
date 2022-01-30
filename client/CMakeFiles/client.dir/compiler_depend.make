@@ -3,6 +3,7 @@
 
 client/CMakeFiles/client.dir/client.cpp.o: client/client.cpp \
   /usr/include/stdc-predef.h \
+  client/client.hpp \
   /usr/include/c++/11.1.0/iostream \
   /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -1280,11 +1281,8 @@ client/CMakeFiles/client.dir/client.cpp.o: client/client.cpp \
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/writable_pipe.hpp \
   /usr/include/boost/asio/write_at.hpp \
-  /usr/include/boost/asio/impl/write_at.hpp \
-  client/client.hpp
+  /usr/include/boost/asio/impl/write_at.hpp
 
-
-client/client.hpp:
 
 /usr/include/boost/asio/write_at.hpp:
 
@@ -1506,12 +1504,6 @@ client/client.hpp:
 
 /usr/include/boost/predef/architecture/arm.h:
 
-/usr/include/boost/asio/detail/timer_queue_set.hpp:
-
-/usr/include/bits/types/error_t.h:
-
-/usr/include/boost/mpl/less.hpp:
-
 /usr/include/net/if.h:
 
 /usr/include/arpa/inet.h:
@@ -1523,8 +1515,6 @@ client/client.hpp:
 /usr/include/boost/asio/detail/static_mutex.hpp:
 
 /usr/include/linux/ioctl.h:
-
-/usr/include/sys/ioctl.h:
 
 /usr/include/boost/asio/detail/socket_types.hpp:
 
@@ -1736,11 +1726,11 @@ client/client.hpp:
 
 /usr/include/boost/asio/detail/throw_error.hpp:
 
+/usr/include/c++/11.1.0/initializer_list:
+
 /usr/include/boost/predef/compiler/microtec.h:
 
 /usr/include/bits/time64.h:
-
-/usr/include/c++/11.1.0/initializer_list:
 
 /usr/include/c++/11.1.0/ext/alloc_traits.h:
 
@@ -2154,6 +2144,24 @@ client/client.hpp:
 
 /usr/include/bits/types/struct_osockaddr.h:
 
+/usr/include/c++/11.1.0/cstdlib:
+
+/usr/include/bits/netdb.h:
+
+/usr/include/c++/11.1.0/bits/align.h:
+
+/usr/include/c++/11.1.0/iosfwd:
+
+/usr/include/c++/11.1.0/bits/postypes.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/boost/mpl/limits/arity.hpp:
+
+/usr/include/boost/asio/detail/signal_op.hpp:
+
 /usr/include/bits/types/struct_tm.h:
 
 /usr/include/boost/asio/detail/scoped_lock.hpp:
@@ -2232,62 +2240,6 @@ client/client.hpp:
 
 /usr/include/c++/11.1.0/ios:
 
-/usr/include/boost/asio/async_result.hpp:
-
-/usr/include/boost/mpl/aux_/config/eti.hpp:
-
-/usr/include/boost/asio/query.hpp:
-
-/usr/include/boost/date_time/time_system_split.hpp:
-
-/usr/include/c++/11.1.0/bits/string_view.tcc:
-
-/usr/include/boost/asio/detail/base_from_completion_cond.hpp:
-
-/usr/include/boost/asio/detail/timer_queue_ptime.hpp:
-
-/usr/include/boost/asio/detail/strand_service.hpp:
-
-/usr/include/c++/11.1.0/pstl/execution_defs.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/boost/predef/architecture/sys390.h:
-
-/usr/include/sys/cdefs.h:
-
-/usr/include/c++/11.1.0/bits/align.h:
-
-/usr/include/c++/11.1.0/iosfwd:
-
-/usr/include/bits/netdb.h:
-
-/usr/include/c++/11.1.0/bits/postypes.h:
-
-/usr/include/features.h:
-
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/boost/mpl/limits/arity.hpp:
-
-/usr/include/boost/asio/detail/signal_op.hpp:
-
-/usr/include/boost/asio/detail/reactive_descriptor_service.hpp:
-
-/usr/include/stdio.h:
-
-/usr/include/bits/posix1_lim.h:
-
-/usr/include/bits/wordsize.h:
-
-/usr/include/boost/preprocessor/repeat.hpp:
-
-/usr/include/boost/asio/detail/tss_ptr.hpp:
-
-/usr/include/boost/asio/execution/sender.hpp:
-
-/usr/include/boost/mpl/if.hpp:
-
 /usr/include/linux/types.h:
 
 /usr/include/boost/asio/execution/scheduler.hpp:
@@ -2306,6 +2258,70 @@ client/client.hpp:
 
 /usr/include/c++/11.1.0/bits/exception_defines.h:
 
+/usr/include/c++/11.1.0/bits/predefined_ops.h:
+
+/usr/include/c++/11.1.0/pstl/pstl_config.h:
+
+/usr/include/bits/termios-baud.h:
+
+/usr/include/bits/long-double.h:
+
+/usr/include/boost/mpl/aux_/template_arity_fwd.hpp:
+
+/usr/include/boost/asio/async_result.hpp:
+
+/usr/include/boost/mpl/aux_/config/eti.hpp:
+
+/usr/include/boost/asio/query.hpp:
+
+/usr/include/boost/date_time/time_system_split.hpp:
+
+/usr/include/sys/ioctl.h:
+
+client/client.hpp:
+
+/usr/include/bits/struct_mutex.h:
+
+/usr/include/boost/asio/detail/scheduler_task.hpp:
+
+/usr/include/boost/asio/detail/memory.hpp:
+
+/usr/include/c++/11.1.0/bits/hashtable_policy.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/c++/11.1.0/bits/string_view.tcc:
+
+/usr/include/boost/asio/detail/base_from_completion_cond.hpp:
+
+/usr/include/boost/asio/detail/timer_queue_ptime.hpp:
+
+/usr/include/boost/asio/detail/strand_service.hpp:
+
+/usr/include/c++/11.1.0/pstl/execution_defs.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/boost/predef/architecture/sys390.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/boost/asio/detail/reactive_descriptor_service.hpp:
+
+/usr/include/stdio.h:
+
+/usr/include/bits/posix1_lim.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/boost/preprocessor/repeat.hpp:
+
+/usr/include/boost/asio/detail/tss_ptr.hpp:
+
+/usr/include/boost/asio/execution/sender.hpp:
+
+/usr/include/boost/mpl/if.hpp:
+
 /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/cpu_defines.h:
 
 /usr/include/c++/11.1.0/ext/string_conversions.h:
@@ -2314,8 +2330,6 @@ client/client.hpp:
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/and.hpp:
 
-/usr/include/c++/11.1.0/cstdlib:
-
 /usr/include/c++/11.1.0/ostream:
 
 /usr/include/boost/asio/detail/posix_event.hpp:
@@ -2323,16 +2337,6 @@ client/client.hpp:
 /usr/include/stdint.h:
 
 /usr/include/endian.h:
-
-/usr/include/bits/long-double.h:
-
-/usr/include/boost/mpl/aux_/template_arity_fwd.hpp:
-
-/usr/include/c++/11.1.0/bits/predefined_ops.h:
-
-/usr/include/c++/11.1.0/pstl/pstl_config.h:
-
-/usr/include/bits/termios-baud.h:
 
 /usr/include/c++/11.1.0/bits/locale_classes.h:
 
@@ -2488,8 +2492,6 @@ client/client.hpp:
 
 /usr/include/c++/11.1.0/bits/stl_pair.h:
 
-/usr/include/bits/struct_mutex.h:
-
 /usr/include/boost/preprocessor/control/detail/while.hpp:
 
 /usr/include/boost/regex/config.hpp:
@@ -2627,6 +2629,12 @@ client/client.cpp:
 /usr/include/c++/11.1.0/tr1/exp_integral.tcc:
 
 /usr/include/c++/11.1.0/bits/concept_check.h:
+
+/usr/include/bits/types/error_t.h:
+
+/usr/include/boost/asio/detail/timer_queue_set.hpp:
+
+/usr/include/boost/mpl/less.hpp:
 
 /usr/include/boost/asio/detail/global.hpp:
 
@@ -2828,8 +2836,6 @@ client/client.cpp:
 
 /usr/include/boost/preprocessor/comparison/limits/not_equal_256.hpp:
 
-/usr/include/boost/asio/detail/memory.hpp:
-
 /usr/include/c++/11.1.0/bits/atomic_lockfree_defines.h:
 
 /usr/include/boost/predef/os/solaris.h:
@@ -2907,12 +2913,6 @@ client/client.cpp:
 /usr/include/boost/asio/connect.hpp:
 
 /usr/include/c++/11.1.0/atomic:
-
-/usr/include/boost/asio/detail/scheduler_task.hpp:
-
-/usr/include/gnu/stubs.h:
-
-/usr/include/c++/11.1.0/bits/hashtable_policy.h:
 
 /usr/include/sys/timerfd.h:
 
