@@ -2,17 +2,15 @@
 
 void Server::waiting()
 {
-    tcp_acceptor.listen();
-
     tcp_acceptor.async_accept(tcp_socket,
-        [](const boost::system::error_code& ec)
+        [this](const boost::system::error_code& ec)
         {
             if (!ec)
             {
                 std::cout << "Connection established" << std::endl;
+
+                accepting<std::string>();
             }
         }
     );
-
-    io_context.run();
 }

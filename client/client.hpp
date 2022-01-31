@@ -32,17 +32,22 @@ public:
 
     void read();
 
-    ~Client() {}
+    ~Client() 
+    {
+        io_context.run();
+    }
 };
 
 template <typename T>
 void Client::send(T data)
 {
-    boost::asio::write(socket, boost::asio::buffer(data),
+    boost::asio::async_write(socket, boost::asio::buffer(data),
         [](const boost::system::error_code& error, std::size_t bytes_transferred)
         {
+            if (error)
+                std::cerr << "Error: " << error.message() << std::endl;
+
             std::cout << "Bytes transferred: " << bytes_transferred << std::endl;
-            return bytes_transferred;
         }
     ); 
 }
