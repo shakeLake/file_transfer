@@ -8,6 +8,9 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 
+// STL
+#include <array>
+
 
 class Server
 {

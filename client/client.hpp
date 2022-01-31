@@ -8,6 +8,9 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 
+// STL
+#include <vector>
+
 using namespace boost::asio::ip;
 
 class Client
