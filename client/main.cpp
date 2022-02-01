@@ -7,8 +7,8 @@ int main()
     if (test.connect())
         std::cout << "Connected" << std::endl;
 
-    std::vector<char> name = {'M', 'a', 'r', 'k', '\n'};
-    test.send<std::vector<char>>(name);
+    /* TYPE */
+    test.send< /* TYPE */ >(name);
 
     return 0;
 }

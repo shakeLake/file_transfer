@@ -31,7 +31,9 @@ public:
     void accepting();
 
     ~Server() 
-    { io_context.run(); }
+    { 
+        io_context.run(); 
+    }
 };
 
 template <typename T>
@@ -40,12 +42,16 @@ void Server::accepting()
     T data;
 
     boost::asio::async_read(tcp_socket, boost::asio::buffer(data),
-        [data](const boost::system::error_code& ec, std::size_t /* bytes_transferred */)
+        [this, data](const boost::system::error_code& ec, std::size_t bytes_transferred)
         {
-            if (ec)
+            if (!ec)
+            {
+                std::cout << "bytes transferred: " << bytes_transferred << std::endl;
+            }
+            else 
+            {
                 std::cerr << "Error: " << ec.message() << std::endl;
-
-            std::cout << "Data: " << data << std::endl;
+            }
         }
     ); 
 }

@@ -9,7 +9,7 @@ void Server::waiting()
             {
                 std::cout << "Connection established" << std::endl;
 
-                accepting< std::vector<char> >();
+                accepting< /* TYPE */ >();
             }
         }
     );

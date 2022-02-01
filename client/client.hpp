@@ -9,7 +9,7 @@
 #include <boost/asio/buffer.hpp>
 
 // STL
-#include <vector>
+#include <array>
 
 using namespace boost::asio::ip;
 
