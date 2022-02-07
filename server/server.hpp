@@ -9,51 +9,40 @@
 #include <boost/asio/buffer.hpp>
 
 // STL
-#include <array>
+#include <cstring>
 
 
 class Server
 {
 private:
-    boost::asio::io_context io_context;
+    boost::asio::io_context io_c;
     boost::asio::ip::tcp::endpoint tcp_endpoint;
     boost::asio::ip::tcp::acceptor tcp_acceptor;
     boost::asio::ip::tcp::socket tcp_socket;
     boost::system::error_code ec;
 public:
-    Server() : tcp_socket(io_context), tcp_endpoint(boost::asio::ip::tcp::v4(), 2014), tcp_acceptor(io_context, tcp_endpoint)
-    { 
+    Server() : tcp_socket(io_c), tcp_endpoint(boost::asio::ip::tcp::v4(), 2014), tcp_acceptor(io_c, tcp_endpoint)
+    {
     }
 
-    void waiting();
+    bool waiting();
 
     template <typename T>
-    void accepting();
+    void reading();
 
     ~Server() 
     { 
-        io_context.run(); 
+        io_c.run();
+        std::cout << "End" << std::endl;
     }
 };
 
 template <typename T>
-void Server::accepting()
+void Server::reading()
 {
     T data;
 
-    boost::asio::async_read(tcp_socket, boost::asio::buffer(data),
-        [this, data](const boost::system::error_code& ec, std::size_t bytes_transferred)
-        {
-            if (!ec)
-            {
-                std::cout << "bytes transferred: " << bytes_transferred << std::endl;
-            }
-            else 
-            {
-                std::cerr << "Error: " << ec.message() << std::endl;
-            }
-        }
-    ); 
+    boost::asio::async_read_until(tcp_socket, boost::asio::buffer(data), "\n"); 
 }
 
 #endif /* SERVER_HPP_ */

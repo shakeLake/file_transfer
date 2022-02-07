@@ -5,16 +5,25 @@ bool Client::connect()
     if (ec)
     {
         std::cerr << "Resolver error: " << ec.message() << std::endl;
-        return socket.is_open();
+        return s.is_open();
     }
 
-    boost::asio::connect(socket, endpoint,
+    boost::asio::connect(s, r.resolve(q, ec),
         [](const boost::system::error_code& ec, const::tcp::endpoint& next)
-        {       
-            std::cout << "Trying: " << next << std::endl;
-            return true;
+        {      
+            if (ec)
+            {
+                std::cerr << ec.message() << std::endl;
+                return false;
+            }
+            else
+            {
+                std::cout << "Trying: " << next << std::endl;
+                return true;
+            }
         }
     );
 
-    return socket.is_open();
+    return s.is_open();
 }
+

@@ -1,16 +1,16 @@
 #include "server.hpp"
 
-void Server::waiting()
+bool Server::waiting()
 {
     tcp_acceptor.async_accept(tcp_socket,
         [this](const boost::system::error_code& ec)
         {
-            if (!ec)
-            {
-                std::cout << "Connection established" << std::endl;
-
-                accepting< /* TYPE */ >();
-            }
+            if (ec)
+                std::cerr << "async_accept() error: " << ec.message() << std::endl;
+            else
+                reading < std::string >();
         }
     );
+    
+    return tcp_acceptor.is_open();
 }

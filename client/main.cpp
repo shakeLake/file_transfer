@@ -7,8 +7,9 @@ int main()
     if (test.connect())
         std::cout << "Connected" << std::endl;
 
-    /* TYPE */
-    test.send< /* TYPE */ >(name);
+    //std::array<char, 32> name = {'M', 'a', 'r', 'k'};
+    std::string name = "Mark\n";
+    test.send< std::string >(name);
 
     return 0;
 }

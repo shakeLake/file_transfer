@@ -2,11 +2,11 @@
 
  int main()
  {
-    Server test;
+   Server test;
     
-    std::cout << "Listening" << std::endl;
+   std::cout << "Listening" << std::endl;
 
-    test.waiting();
+   test.waiting();
 
     return 0;
  }
