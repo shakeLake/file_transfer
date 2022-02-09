@@ -7,9 +7,11 @@ int main()
     if (test.connect())
         std::cout << "Connected" << std::endl;
 
-    //std::array<char, 32> name = {'M', 'a', 'r', 'k'};
-    std::string name = "Mark\n";
-    test.send< std::string >(name);
+    boost::asio::streambuf buf;
+    std::ostream os(&buf);
+    os << "Hello World#";
+
+    test.send(buf);
 
     return 0;
 }

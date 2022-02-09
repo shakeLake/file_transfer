@@ -27,3 +27,19 @@ bool Client::connect()
     return s.is_open();
 }
 
+void Client::send(boost::asio::streambuf& buf)
+{
+    boost::asio::async_write(s, buf.data(),
+        [](const boost::system::error_code& error, std::size_t bytes_transferred)
+        {
+            if (error)
+            {
+                std::cerr << "Error: " << error.message() << std::endl;
+            }
+            else
+            {
+                std::cout << "Bytes transferred: " << bytes_transferred << std::endl;
+            }
+        }
+    );
+}

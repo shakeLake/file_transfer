@@ -8,7 +8,7 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 
-// STL
+// std::string
 #include <cstring>
 
 using namespace boost::asio::ip;
@@ -28,8 +28,7 @@ public:
 
     bool connect();
 
-    template<typename T>
-    void send( T );
+    void send(boost::asio::streambuf&);
 
     ~Client() 
     {
@@ -37,23 +36,5 @@ public:
         std::cout << "End" << std::endl;
     }
 };
-
-template <typename T>
-void Client::send(T data)
-{
-    boost::asio::async_write(s, boost::asio::buffer(data),
-        [](const boost::system::error_code& error, std::size_t bytes_transferred)
-        {
-            if (error)
-            {
-                std::cerr << "Error: " << error.message() << std::endl;
-            }
-            else
-            {
-                std::cout << "Bytes transferred: " << bytes_transferred << std::endl;
-            }
-        }
-    );
-}
 
 #endif /* CLIENT_HPP_ */

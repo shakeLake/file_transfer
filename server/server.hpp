@@ -8,7 +8,7 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 
-// STL
+// std::string
 #include <cstring>
 
 
@@ -27,7 +27,6 @@ public:
 
     bool waiting();
 
-    template <typename T>
     void reading();
 
     ~Server() 
@@ -36,13 +35,5 @@ public:
         std::cout << "End" << std::endl;
     }
 };
-
-template <typename T>
-void Server::reading()
-{
-    T data;
-
-    boost::asio::async_read_until(tcp_socket, boost::asio::buffer(data), "\n"); 
-}
 
 #endif /* SERVER_HPP_ */
