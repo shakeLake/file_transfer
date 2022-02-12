@@ -1,12 +1,12 @@
- #include "server.cpp"
+#include "server.cpp"
 
- int main()
- {
-   Server test;
+int main()
+{
+    Server test;
     
-   std::cout << "Listening" << std::endl;
+    std::cout << "Listening" << std::endl;
 
-   test.waiting();
+    test.waiting();
 
     return 0;
- }
+}

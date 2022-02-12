@@ -11,16 +11,17 @@
 // std::string
 #include <cstring>
 
-using namespace boost::asio::ip;
-
 class Client
 {
 private:
     boost::asio::io_context io_c;
-    tcp::resolver r;
-    tcp::resolver::query q;
-    tcp::socket s;
+
     boost::system::error_code ec;
+
+    boost::asio::ip::tcp::resolver r;
+    boost::asio::ip::tcp::socket s;
+
+    boost::asio::ip::tcp::resolver::query q;
 public:
     Client(std::string host, std::string port) : r(io_c), q(host, port), s(io_c)
     {

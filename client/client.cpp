@@ -9,7 +9,7 @@ bool Client::connect()
     }
 
     boost::asio::connect(s, r.resolve(q, ec),
-        [](const boost::system::error_code& ec, const::tcp::endpoint& next)
+        [](const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint& next)
         {      
             if (ec)
             {
