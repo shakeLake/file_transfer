@@ -83,17 +83,33 @@ server/CMakeFiles/serverLib.dir/server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/serverLib.dir/server.cpp.s"
 	cd /home/mark/Desktop/data/geass/csc/server && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mark/Desktop/data/geass/csc/server/server.cpp -o CMakeFiles/serverLib.dir/server.cpp.s
 
+server/CMakeFiles/serverLib.dir/session.cpp.o: server/CMakeFiles/serverLib.dir/flags.make
+server/CMakeFiles/serverLib.dir/session.cpp.o: server/session.cpp
+server/CMakeFiles/serverLib.dir/session.cpp.o: server/CMakeFiles/serverLib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object server/CMakeFiles/serverLib.dir/session.cpp.o"
+	cd /home/mark/Desktop/data/geass/csc/server && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT server/CMakeFiles/serverLib.dir/session.cpp.o -MF CMakeFiles/serverLib.dir/session.cpp.o.d -o CMakeFiles/serverLib.dir/session.cpp.o -c /home/mark/Desktop/data/geass/csc/server/session.cpp
+
+server/CMakeFiles/serverLib.dir/session.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/serverLib.dir/session.cpp.i"
+	cd /home/mark/Desktop/data/geass/csc/server && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mark/Desktop/data/geass/csc/server/session.cpp > CMakeFiles/serverLib.dir/session.cpp.i
+
+server/CMakeFiles/serverLib.dir/session.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/serverLib.dir/session.cpp.s"
+	cd /home/mark/Desktop/data/geass/csc/server && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mark/Desktop/data/geass/csc/server/session.cpp -o CMakeFiles/serverLib.dir/session.cpp.s
+
 # Object files for target serverLib
 serverLib_OBJECTS = \
-"CMakeFiles/serverLib.dir/server.cpp.o"
+"CMakeFiles/serverLib.dir/server.cpp.o" \
+"CMakeFiles/serverLib.dir/session.cpp.o"
 
 # External object files for target serverLib
 serverLib_EXTERNAL_OBJECTS =
 
 server/libserverLib.a: server/CMakeFiles/serverLib.dir/server.cpp.o
+server/libserverLib.a: server/CMakeFiles/serverLib.dir/session.cpp.o
 server/libserverLib.a: server/CMakeFiles/serverLib.dir/build.make
 server/libserverLib.a: server/CMakeFiles/serverLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libserverLib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libserverLib.a"
 	cd /home/mark/Desktop/data/geass/csc/server && $(CMAKE_COMMAND) -P CMakeFiles/serverLib.dir/cmake_clean_target.cmake
 	cd /home/mark/Desktop/data/geass/csc/server && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/serverLib.dir/link.txt --verbose=$(VERBOSE)
 

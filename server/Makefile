@@ -192,6 +192,30 @@ server.cpp.s:
 	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/server.cpp.s
 .PHONY : server.cpp.s
 
+session.o: session.cpp.o
+.PHONY : session.o
+
+# target to build an object file
+session.cpp.o:
+	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/session.cpp.o
+.PHONY : session.cpp.o
+
+session.i: session.cpp.i
+.PHONY : session.i
+
+# target to preprocess a source file
+session.cpp.i:
+	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/session.cpp.i
+.PHONY : session.cpp.i
+
+session.s: session.cpp.s
+.PHONY : session.s
+
+# target to generate assembly for a file
+session.cpp.s:
+	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/session.cpp.s
+.PHONY : session.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -208,6 +232,9 @@ help:
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"
+	@echo "... session.o"
+	@echo "... session.i"
+	@echo "... session.s"
 .PHONY : help
 
 

@@ -144,7 +144,7 @@ client/CMakeFiles/client.dir/clean:
 client/CMakeFiles/start.dir/all: client/CMakeFiles/client.dir/all
 	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/depend
 	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=5,6 "Built target start"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=6,7 "Built target start"
 .PHONY : client/CMakeFiles/start.dir/all
 
 # Build rule for subdir invocation for target.
@@ -170,12 +170,12 @@ client/CMakeFiles/start.dir/clean:
 server/CMakeFiles/serverLib.dir/all:
 	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/depend
 	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/serverLib.dir/build.make server/CMakeFiles/serverLib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=3,4 "Built target serverLib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=3,4,5 "Built target serverLib"
 .PHONY : server/CMakeFiles/serverLib.dir/all
 
 # Build rule for subdir invocation for target.
 server/CMakeFiles/serverLib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/CMakeFiles/serverLib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 0
 .PHONY : server/CMakeFiles/serverLib.dir/rule
@@ -196,12 +196,12 @@ server/CMakeFiles/serverLib.dir/clean:
 server/CMakeFiles/startServer.dir/all: server/CMakeFiles/serverLib.dir/all
 	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/startServer.dir/build.make server/CMakeFiles/startServer.dir/depend
 	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/startServer.dir/build.make server/CMakeFiles/startServer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=7,8 "Built target startServer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mark/Desktop/data/geass/csc/CMakeFiles --progress-num=8,9 "Built target startServer"
 .PHONY : server/CMakeFiles/startServer.dir/all
 
 # Build rule for subdir invocation for target.
 server/CMakeFiles/startServer.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/CMakeFiles/startServer.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/mark/Desktop/data/geass/csc/CMakeFiles 0
 .PHONY : server/CMakeFiles/startServer.dir/rule

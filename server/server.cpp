@@ -2,34 +2,16 @@
 
 void Server::waiting()
 {
-    tcp_acceptor.async_accept(tcp_socket,
-        [this](const boost::system::error_code& ec)
+    tcp_acceptor.async_accept(
+        [this](const boost::system::error_code& ec, boost::asio::ip::tcp::socket socket_)
         {
             if (!ec)
             {
                 std::cerr << "New connections" << std::endl;
-                reading();
+                std::make_shared<Session>(std::move(socket_))->read_write_cycle();
             }
 
             waiting();
         }
     );
-}
-
-void Server::reading()
-{
-    boost::asio::streambuf buf;
-
-    boost::asio::read_until(tcp_socket, buf, '#', ec);
-
-    if (ec)
-        std::cerr << "Error: " << ec.message() << std::endl;
-
-    std::cout << "Size: " << buf.size() << std::endl;
-
-    std::istream input(&buf);
-    std::string line;
-    getline(input, line, '#');
-
-    std::cout << line << std::endl;
 }

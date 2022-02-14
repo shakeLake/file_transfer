@@ -1,7 +1,7 @@
-server/CMakeFiles/serverLib.dir/server.cpp.o: \
- /home/mark/Desktop/data/geass/csc/server/server.cpp \
+server/CMakeFiles/serverLib.dir/session.cpp.o: \
+ /home/mark/Desktop/data/geass/csc/server/session.cpp \
  /usr/include/stdc-predef.h \
- /home/mark/Desktop/data/geass/csc/server/server.hpp \
+ /home/mark/Desktop/data/geass/csc/server/session.hpp \
  /usr/include/c++/11.1.0/iostream \
  /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -1128,4 +1128,4 @@ server/CMakeFiles/serverLib.dir/server.cpp.o: \
  /usr/include/boost/asio/writable_pipe.hpp \
  /usr/include/boost/asio/write_at.hpp \
  /usr/include/boost/asio/impl/write_at.hpp \
- /home/mark/Desktop/data/geass/csc/server/session.hpp
+ /home/mark/Desktop/data/geass/csc/server/server.hpp
