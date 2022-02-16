@@ -7,7 +7,7 @@ void Server::waiting()
         {
             if (!ec)
             {
-                std::cerr << "New connections" << std::endl;
+                std::cerr << "New connection" << std::endl;
                 std::make_shared<Session>(std::move(socket_))->read_write_cycle();
             }
 

@@ -11,9 +11,6 @@
 // std::string
 #include <cstring>
 
-//headers
-#include "server.hpp"
-
 class Session
 {
 private:
@@ -21,9 +18,9 @@ private:
 
     boost::system::error_code ec;
 
-    void reading();
+    void read();
 
-    void writing();
+    void write(boost::asio::streambuf&);
 public:
     Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket)) 
     {
@@ -31,7 +28,7 @@ public:
 
     void read_write_cycle()
     {
-        reading();
+        read();
     }
 
     ~Session() 

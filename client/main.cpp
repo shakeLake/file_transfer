@@ -7,11 +7,10 @@ int main()
     if (test.connect())
         std::cout << "Connected" << std::endl;
 
-    boost::asio::streambuf buf;
-    std::ostream os(&buf);
-    os << "Hello World#";
-
-    test.send(buf);
+    test.read_write_cycle
+    (
+        test.input_data()
+    );
 
     return 0;
 }

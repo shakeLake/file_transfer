@@ -19,17 +19,26 @@ private:
     boost::system::error_code ec;
 
     boost::asio::ip::tcp::resolver r;
-    boost::asio::ip::tcp::socket s;
+    boost::asio::ip::tcp::socket socket_;
 
     boost::asio::ip::tcp::resolver::query q;
+
+    void read();
+
+    void write(boost::asio::streambuf&);
 public:
-    Client(std::string host, std::string port) : r(io_c), q(host, port), s(io_c)
+    Client(std::string host, std::string port) : r(io_c), q(host, port), socket_(io_c)
     {
     }
 
     bool connect();
 
-    void send(boost::asio::streambuf&);
+    boost::asio::streambuf input_data();
+
+    void read_write_cycle(boost::asio::streambuf& buf)
+    {
+        write(buf);
+    }
 
     ~Client() 
     {
