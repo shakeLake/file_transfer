@@ -8,8 +8,9 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 
-// std::string
+// data
 #include <cstring>
+#include <vector>
 
 class Client
 {
@@ -23,9 +24,17 @@ private:
 
     boost::asio::ip::tcp::resolver::query q;
 
+    boost::asio::streambuf buffer;
+
+    // All data which send from this Client and get from other Client
+    std::vector<boost::asio::streambuf> saved; 
+
     void read();
 
-    void write(boost::asio::streambuf&);
+    void write();
+
+    void input_data();
+    void output_data();
 public:
     Client(std::string host, std::string port) : r(io_c), q(host, port), socket_(io_c)
     {
@@ -33,11 +42,9 @@ public:
 
     bool connect();
 
-    boost::asio::streambuf input_data();
-
-    void read_write_cycle(boost::asio::streambuf& buf)
+    void read_write_cycle()
     {
-        write(buf);
+        write();
     }
 
     ~Client() 

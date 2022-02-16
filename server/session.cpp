@@ -2,27 +2,36 @@
 
 void Session::read()
 {
-    boost::asio::streambuf buf;
-
-    boost::asio::read_until(socket_, buf, '#', ec);
+    boost::asio::read_until(socket_, buffer, '\n', ec);
 
     if (ec)
         std::cerr << "Session::read error: " << ec.message() << std::endl;
 
-    std::cout << "Session::read size: " << buf.size() << std::endl;
+    std::cout << "Session::read size: " << buffer.size() << std::endl;
 
-    std::istream input(&buf);
+    std::istream input(&buffer);
     std::string line;
-    getline(input, line, '#');
+    getline(input, line, '\n');
 
     std::cout << line << std::endl;
 
-    write(buf);
+    buffer.consume( buffer.size() );
+
+    read();
+    //write();
 }
 
-void Session::write(boost::asio::streambuf& buf)
+void Session::write()
 {
-    boost::asio::async_write(socket_, buf.data(),
+    /*
+        extern boost::asio::streambuf buffer; // Variable determined in session.hpp
+
+        std::istream input(&buffer);
+        std::string line;
+        getline(input, line, '\n');    
+    */
+
+    boost::asio::async_write(socket_, buffer.data(),
         [](const boost::system::error_code& error, std::size_t bytes_transferred)
         {
             if (error)
@@ -35,4 +44,8 @@ void Session::write(boost::asio::streambuf& buf)
             }
         }
     );
+
+    buffer.consume( buffer.size() );
+
+    read();
 }

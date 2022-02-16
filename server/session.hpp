@@ -18,9 +18,11 @@ private:
 
     boost::system::error_code ec;
 
+    boost::asio::streambuf buffer;
+
     void read();
 
-    void write(boost::asio::streambuf&);
+    void write();
 public:
     Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket)) 
     {

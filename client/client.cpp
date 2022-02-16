@@ -27,23 +27,32 @@ bool Client::connect()
     return socket_.is_open();
 }
 
-boost::asio::streambuf input_data()
+void Client::input_data()
 {
-    boost::asio::streambuf buf;
-
-    std::istream input(&buf);
+    std::ostream output(&buffer);
 
     std::string data;
 
     std::cout << "Input: " << std::endl;
-    geline(input, data, "#");
+    getline(std::cin, data, '\n');
 
-    return buf;
+    output << data;
 }
 
-void Client::write(boost::asio::streambuf& buf)
+void Client::output_data()
 {
-    boost::asio::async_write(socket_, buf.data(),
+    std::istream input(&buffer);
+    std::string data;
+    getline(input, data, '\n');
+
+    std::cout << data << std::endl;
+}
+
+void Client::write()
+{
+    input_data();
+
+    boost::asio::async_write(socket_, buffer.data(),
         [](const boost::system::error_code& error, std::size_t bytes_transferred)
         {
             if (error)
@@ -57,23 +66,27 @@ void Client::write(boost::asio::streambuf& buf)
         }
     );
 
-    read();
+    saved.push_back(buffer);
+
+    buffer.consume( buffer.size() );
+
+    //read();
 }
 
 void Client::read()
 {
-    boost::asio::streambuf buf;
-
-    boost::asio::read_until(socket_, buf, '#', ec);
+    boost::asio::read_until(socket_, buffer, '\n', ec);
 
     if (ec)
         std::cerr << "Client::read error: " << ec.message() << std::endl;
 
-    std::cout << "Client::read size: " << buf.size() << std::endl;
+    std::cout << "Client::read size: " << buffer.size() << std::endl;
 
-    std::istream input(&buf);
-    std::string line;
-    getline(input, line, '#');
+    output_data();
 
-    std::cout << line << std::endl;
+    saved.push_back(buffer);
+
+    buffer.consume( buffer.size() );
+
+    write();
 }

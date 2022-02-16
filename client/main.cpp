@@ -7,10 +7,7 @@ int main()
     if (test.connect())
         std::cout << "Connected" << std::endl;
 
-    test.read_write_cycle
-    (
-        test.input_data()
-    );
+    test.read_write_cycle();
 
     return 0;
 }
