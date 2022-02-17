@@ -26,8 +26,13 @@ private:
 
     boost::asio::streambuf buffer;
 
-    // All data which send from this Client and get from other Client
-    std::vector<boost::asio::streambuf> saved; 
+    /*
+        All data which send from this Client and get from other Client
+
+        DATA in this example is std::string
+
+        std::vector< DATA_TYPE > saved
+    */
 
     void read();
 

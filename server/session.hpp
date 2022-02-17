@@ -23,6 +23,9 @@ private:
     void read();
 
     void write();
+
+    void input_data(std::string);
+    void output_data();
 public:
     Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket)) 
     {

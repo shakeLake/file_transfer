@@ -27,6 +27,36 @@ bool Client::connect()
     return socket_.is_open();
 }
 
+void Client::write()
+{
+    input_data();
+
+    boost::asio::write(socket_, buffer.data(), boost::asio::transfer_all(), ec);
+
+    if (ec)
+        std::cerr << "Client::write error" << ec.message() << std::endl;
+
+    buffer.consume( buffer.size() );
+
+    read();
+}
+
+void Client::read()
+{
+    boost::asio::read_until(socket_, buffer, '\n', ec);
+
+    if (ec && ec != boost::asio::error::eof)
+        std::cerr << "Client::read error: " << ec.message() << std::endl;
+
+    std::cout << "Client::read size: " << buffer.size() << std::endl;
+
+    output_data();
+
+    buffer.consume( buffer.size() );
+
+    write();
+}
+
 void Client::input_data()
 {
     std::ostream output(&buffer);
@@ -46,47 +76,4 @@ void Client::output_data()
     getline(input, data, '\n');
 
     std::cout << data << std::endl;
-}
-
-void Client::write()
-{
-    input_data();
-
-    boost::asio::async_write(socket_, buffer.data(),
-        [](const boost::system::error_code& error, std::size_t bytes_transferred)
-        {
-            if (error)
-            {
-                std::cerr << "Client::write error: " << error.message() << std::endl;
-            }
-            else
-            {
-                std::cout << "Client::write bytes transferred: " << bytes_transferred << std::endl;
-            }
-        }
-    );
-
-    saved.push_back(buffer);
-
-    buffer.consume( buffer.size() );
-
-    //read();
-}
-
-void Client::read()
-{
-    boost::asio::read_until(socket_, buffer, '\n', ec);
-
-    if (ec)
-        std::cerr << "Client::read error: " << ec.message() << std::endl;
-
-    std::cout << "Client::read size: " << buffer.size() << std::endl;
-
-    output_data();
-
-    saved.push_back(buffer);
-
-    buffer.consume( buffer.size() );
-
-    write();
 }

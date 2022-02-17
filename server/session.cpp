@@ -4,32 +4,27 @@ void Session::read()
 {
     boost::asio::read_until(socket_, buffer, '\n', ec);
 
-    if (ec)
+    if (ec && ec != boost::asio::error::eof)
         std::cerr << "Session::read error: " << ec.message() << std::endl;
 
     std::cout << "Session::read size: " << buffer.size() << std::endl;
 
-    std::istream input(&buffer);
-    std::string line;
-    getline(input, line, '\n');
-
-    std::cout << line << std::endl;
+    output_data();
 
     buffer.consume( buffer.size() );
 
-    read();
-    //write();
+    write();
 }
 
 void Session::write()
 {
     /*
-        extern boost::asio::streambuf buffer; // Variable determined in session.hpp
+        async_write send nothing 
 
-        std::istream input(&buffer);
-        std::string line;
-        getline(input, line, '\n');    
+        You should add something in buffer
     */
+
+    input_data("Completed");
 
     boost::asio::async_write(socket_, buffer.data(),
         [](const boost::system::error_code& error, std::size_t bytes_transferred)
@@ -48,4 +43,22 @@ void Session::write()
     buffer.consume( buffer.size() );
 
     read();
+}
+
+void Session::input_data(std::string data)
+{
+    std::ostream output(&buffer);
+
+    data += '\n';
+
+    output << data;
+}
+
+void Session::output_data()
+{
+    std::istream input(&buffer);
+    std::string data;
+    getline(input, data, '\n');
+
+    std::cout << data << std::endl;
 }
