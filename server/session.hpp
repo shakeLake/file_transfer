@@ -8,8 +8,12 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 
-// std::string
+// data
+#include <fstream>
 #include <cstring>
+
+// assert
+#include <cassert>
 
 class Session
 {
@@ -24,7 +28,10 @@ private:
 
     void write();
 
-    void input_data(std::string);
+    /*
+        if you need to send data to client
+        void input_data();
+    */
     void output_data();
 public:
     Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket)) 

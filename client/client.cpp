@@ -34,11 +34,11 @@ void Client::write()
     boost::asio::write(socket_, buffer.data(), boost::asio::transfer_all(), ec);
 
     if (ec)
-        std::cerr << "Client::write error" << ec.message() << std::endl;
+        std::cerr << "Client::write error: " << ec.message() << std::endl;
 
     buffer.consume( buffer.size() );
 
-    read();
+    //read();
 }
 
 void Client::read()
@@ -48,32 +48,43 @@ void Client::read()
     if (ec && ec != boost::asio::error::eof)
         std::cerr << "Client::read error: " << ec.message() << std::endl;
 
-    std::cout << "Client::read size: " << buffer.size() << std::endl;
-
-    output_data();
+    //output_data();
 
     buffer.consume( buffer.size() );
-
-    write();
 }
 
 void Client::input_data()
 {
-    std::ostream output(&buffer);
+    // read and save to array
+    std::ifstream fin;
+    fin.open(filename, std::ios_base::binary);
 
-    std::string data;
+    fin.seekg(0, fin.end);
+    int length = fin.tellg();
+    fin.seekg(0, fin.beg);
 
-    std::cout << "Input: " << std::endl;
-    getline(std::cin, data, '\n');
+    char* file = new char[length];
 
-    output << data;
+    fin.read(file, length);
+
+    // save file to streambuffer
+    std::ostream os(&buffer);
+
+    os << file;
+
+    delete [] file;
+    fin.close();
 }
 
+/*
 void Client::output_data()
 {
-    std::istream input(&buffer);
-    std::string data;
-    getline(input, data, '\n');
+    std::ofstream fout;
+    fout.open(FILENAME, std::ios_base::binary);
 
-    std::cout << data << std::endl;
+    if (!fout.is_open())
+        std::cerr << "Error" << std::endl;
+
+    fout.write(file, LENGTH);
 }
+*/

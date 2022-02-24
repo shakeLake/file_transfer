@@ -9,8 +9,12 @@
 #include <boost/asio/buffer.hpp>
 
 // data
+#include <fstream>
 #include <cstring>
 #include <vector>
+
+// assert
+#include <cassert>
 
 class Client
 {
@@ -26,22 +30,19 @@ private:
 
     boost::asio::streambuf buffer;
 
-    /*
-        All data which send from this Client and get from other Client
-
-        DATA in this example is std::string
-
-        std::vector< DATA_TYPE > saved
-    */
+    std::string filename;
 
     void read();
 
     void write();
 
     void input_data();
-    void output_data();
+    /*
+        if you want to get data from server
+        void output_data();
+    */
 public:
-    Client(std::string host, std::string port) : r(io_c), q(host, port), socket_(io_c)
+    Client(std::string host, std::string port) : r(io_c), q(host, port), socket_(io_c), filename("/home/mark/Desktop/11.jpg")
     {
     }
 

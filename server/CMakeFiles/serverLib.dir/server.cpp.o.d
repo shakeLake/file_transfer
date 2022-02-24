@@ -1128,4 +1128,8 @@ server/CMakeFiles/serverLib.dir/server.cpp.o: \
  /usr/include/boost/asio/writable_pipe.hpp \
  /usr/include/boost/asio/write_at.hpp \
  /usr/include/boost/asio/impl/write_at.hpp \
- /home/mark/Desktop/data/geass/csc/server/session.hpp
+ /home/mark/Desktop/data/geass/csc/server/session.hpp \
+ /usr/include/c++/11.1.0/fstream /usr/include/c++/11.1.0/bits/codecvt.h \
+ /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/basic_file.h \
+ /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/c++io.h \
+ /usr/include/c++/11.1.0/bits/fstream.tcc
