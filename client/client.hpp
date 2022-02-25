@@ -11,7 +11,7 @@
 // data
 #include <fstream>
 #include <cstring>
-#include <vector>
+#include <array>
 
 // assert
 #include <cassert>
@@ -30,28 +30,39 @@ private:
 
     boost::asio::streambuf buffer;
 
-    std::string filename;
+    struct
+    {
+        std::string path;
+        std::string filename;
+        std::string filetype;
+        void separate_filename(char*);
+
+        unsigned int length;
+        char* file;
+
+        std::ifstream fin;
+    } file_prop;
 
     void read();
 
+    template <typename T>
     void write();
 
     void input_data();
-    /*
-        if you want to get data from server
-        void output_data();
-    */
 public:
-    Client(std::string host, std::string port) : r(io_c), q(host, port), socket_(io_c), filename("/home/mark/Desktop/11.jpg")
+    Client(std::string host, std::string port, char* fn) : r(io_c), q(host, port), socket_(io_c)
     {
+        path = fn;
+        file_prop.fin.open(fn, std::ios_base::binary);
+
+        file_prop.fin.seekg(0, file_prop.fin.end);
+        file_prop.length = file_prop.fin.tellg();
+        file_prop.fin.seekg(0, file_prop.fin.beg);
+
+        file_prop.file = new char[length];
     }
 
     bool connect();
-
-    void read_write_cycle()
-    {
-        write();
-    }
 
     ~Client() 
     {
@@ -59,5 +70,18 @@ public:
         std::cout << "End" << std::endl;
     }
 };
+
+template <typename T>
+void Client<T>::write(T data)
+{
+    boost::asio::write(socket_, data, boost::asio::transfer_all(), ec);
+
+    if (ec)
+        std::cerr << "Client::write error: " << ec.message() << std::endl;
+
+    buffer.consume( buffer.size() );
+
+    read();
+}
 
 #endif /* CLIENT_HPP_ */

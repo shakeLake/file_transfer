@@ -27,10 +27,44 @@ bool Client::connect()
     return socket_.is_open();
 }
 
+void Client::file_prop.separate_filename(char* fn)
+{
+    unsigned short length = sizeof(fn) / sizeof(fn[0]);
+
+    unsigned short symb_counter = length;
+    while (fn[symb_counter] != '.')
+    {
+        symb_counter -= 1;
+        filetype += fn[symb_counter];
+    }
+
+    // string reverse 
+    char buf;
+    for (unsigned short i = filetype.size() - 1, j = 0; j != (filetype.size() / 2); i--, j++)
+    {
+        buf = filetype[j];
+        filetype[j] = filetype[i];
+        filetype[i] = buf;
+    }
+
+    while (fn[symb_counter] != '/')
+    {
+        symb_counter -= 1;
+        filename += fn[symb_counter];
+    }
+
+    // string reverse
+    char buf;
+    for (unsigned short i = filename.size() - 1, j = 0; j != (filename.size() / 2); i--, j++)
+    {
+        buf = filename[j];
+        filename[j] = filename[i];
+        filename[i] = buf;
+    }
+}
+
 void Client::write()
 {
-    input_data();
-
     boost::asio::write(socket_, buffer.data(), boost::asio::transfer_all(), ec);
 
     if (ec)
@@ -43,48 +77,43 @@ void Client::write()
 
 void Client::read()
 {
-    boost::asio::read_until(socket_, buffer, '\n', ec);
+    mutable_buffer m_buf;
+
+    boost::asio::read_until(socket_, m_buf, ec);
 
     if (ec && ec != boost::asio::error::eof)
         std::cerr << "Client::read error: " << ec.message() << std::endl;
 
-    //output_data();
+    // get data from buffer
+    std::istream is(&m_buf);
+    bool status;
+    is >> status;
 
     buffer.consume( buffer.size() );
 }
 
-void Client::input_data()
+void Client::input_file_prop()
 {
-    // read and save to array
-    std::ifstream fin;
-    fin.open(filename, std::ios_base::binary);
+    std::array<std::string, 2> file_properties = {file_prop.filename, file_prop.filetype};
 
-    fin.seekg(0, fin.end);
-    int length = fin.tellg();
-    fin.seekg(0, fin.beg);
+    boost::array<mutable_buffer, 2> file_properties_buffer = {
+        boost::asio::buffer(file_prop.length),
+        boost::asio::buffer(file_properties),
+    };
 
-    char* file = new char[length];
+    write(file_properties_buffer);
+}
 
-    fin.read(file, length);
+void Client::input_file()
+{
+    file_prop.fin.read(file_prop.file, file_prop.length);
 
     // save file to streambuffer
     std::ostream os(&buffer);
+    os << file_prop.file;
 
-    os << file;
+    write(buffer.data());
 
-    delete [] file;
-    fin.close();
+    delete [] file_prop.file;
+    file_prop.fin.close();
 }
-
-/*
-void Client::output_data()
-{
-    std::ofstream fout;
-    fout.open(FILENAME, std::ios_base::binary);
-
-    if (!fout.is_open())
-        std::cerr << "Error" << std::endl;
-
-    fout.write(file, LENGTH);
-}
-*/
