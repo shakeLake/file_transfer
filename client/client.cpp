@@ -27,7 +27,7 @@ bool Client::connect()
     return socket_.is_open();
 }
 
-void Client::file_prop.separate_filename(char* fn)
+void Client::Properties::separate_filename(char* fn)
 {
     unsigned short length = sizeof(fn) / sizeof(fn[0]);
 
@@ -54,7 +54,6 @@ void Client::file_prop.separate_filename(char* fn)
     }
 
     // string reverse
-    char buf;
     for (unsigned short i = filename.size() - 1, j = 0; j != (filename.size() / 2); i--, j++)
     {
         buf = filename[j];
@@ -63,31 +62,18 @@ void Client::file_prop.separate_filename(char* fn)
     }
 }
 
-void Client::write()
-{
-    boost::asio::write(socket_, buffer.data(), boost::asio::transfer_all(), ec);
-
-    if (ec)
-        std::cerr << "Client::write error: " << ec.message() << std::endl;
-
-    buffer.consume( buffer.size() );
-
-    //read();
-}
-
 void Client::read()
 {
-    mutable_buffer m_buf;
-
-    boost::asio::read_until(socket_, m_buf, ec);
+    boost::asio::read_until(socket_, buffer, '#', ec);
 
     if (ec && ec != boost::asio::error::eof)
         std::cerr << "Client::read error: " << ec.message() << std::endl;
 
     // get data from buffer
-    std::istream is(&m_buf);
-    bool status;
-    is >> status;
+    std::istream is(&buffer);
+    std::string status_message;
+    
+    getline(is, status_message, '#');
 
     buffer.consume( buffer.size() );
 }
@@ -96,9 +82,9 @@ void Client::input_file_prop()
 {
     std::array<std::string, 2> file_properties = {file_prop.filename, file_prop.filetype};
 
-    boost::array<mutable_buffer, 2> file_properties_buffer = {
-        boost::asio::buffer(file_prop.length),
-        boost::asio::buffer(file_properties),
+    boost::array<boost::asio::mutable_buffer, 2> file_properties_buffer = {
+        boost::asio::buffer( std::to_string( file_prop.length ) ),
+        boost::asio::buffer(file_properties)
     };
 
     write(file_properties_buffer);

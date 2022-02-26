@@ -30,7 +30,7 @@ private:
 
     boost::asio::streambuf buffer;
 
-    struct
+    struct Properties
     {
         std::string path;
         std::string filename;
@@ -38,6 +38,7 @@ private:
         void separate_filename(char*);
 
         unsigned int length;
+
         char* file;
 
         std::ifstream fin;
@@ -46,20 +47,21 @@ private:
     void read();
 
     template <typename T>
-    void write();
+    void write(T);
 
-    void input_data();
+    void input_file();
+    void input_file_prop();
 public:
     Client(std::string host, std::string port, char* fn) : r(io_c), q(host, port), socket_(io_c)
     {
-        path = fn;
+        file_prop.path = fn;
         file_prop.fin.open(fn, std::ios_base::binary);
 
         file_prop.fin.seekg(0, file_prop.fin.end);
         file_prop.length = file_prop.fin.tellg();
         file_prop.fin.seekg(0, file_prop.fin.beg);
 
-        file_prop.file = new char[length];
+        file_prop.file = new char[file_prop.length];
     }
 
     bool connect();
