@@ -80,14 +80,9 @@ void Client::read()
 
 void Client::input_file_prop()
 {
-    std::array<std::string, 2> file_properties = {file_prop.filename, file_prop.filetype};
+    std::array<std::string, 3> file_properties = {file_prop.filename, file_prop.filetype, std::to_string( file_prop.length )};
 
-    boost::array<boost::asio::mutable_buffer, 2> file_properties_buffer = {
-        boost::asio::buffer( std::to_string( file_prop.length ) ),
-        boost::asio::buffer(file_properties)
-    };
-
-    write(file_properties_buffer);
+    write<boost::asio::mutable_buffer> ( boost::asio::buffer(file_properties) );
 }
 
 void Client::input_file()
@@ -98,7 +93,7 @@ void Client::input_file()
     std::ostream os(&buffer);
     os << file_prop.file;
 
-    write(buffer.data());
+    write< boost::asio::const_buffer > (buffer.data());
 
     delete [] file_prop.file;
     file_prop.fin.close();

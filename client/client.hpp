@@ -57,6 +57,8 @@ public:
         file_prop.path = fn;
         file_prop.fin.open(fn, std::ios_base::binary);
 
+        assert(file_prop.fin.is_open());
+
         file_prop.fin.seekg(0, file_prop.fin.end);
         file_prop.length = file_prop.fin.tellg();
         file_prop.fin.seekg(0, file_prop.fin.beg);
@@ -74,7 +76,7 @@ public:
 };
 
 template <typename T>
-void Client<T>::write(T data)
+void Client::write(T data)
 {
     boost::asio::write(socket_, data, boost::asio::transfer_all(), ec);
 
