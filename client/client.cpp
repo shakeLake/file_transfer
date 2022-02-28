@@ -27,16 +27,17 @@ bool Client::connect()
     return socket_.is_open();
 }
 
-void Client::Properties::separate_filename(char* fn)
+void Client::Properties::separate_filename(std::string fn)
 {
     unsigned short length = sizeof(fn) / sizeof(fn[0]);
 
     unsigned short symb_counter = length;
     while (fn[symb_counter] != '.')
     {
-        symb_counter -= 1;
         filetype += fn[symb_counter];
+        symb_counter -= 1;
     }
+    symb_counter -= 1;
 
     // string reverse 
     char buf;
@@ -49,8 +50,8 @@ void Client::Properties::separate_filename(char* fn)
 
     while (fn[symb_counter] != '/')
     {
-        symb_counter -= 1;
         filename += fn[symb_counter];
+        symb_counter -= 1;
     }
 
     // string reverse

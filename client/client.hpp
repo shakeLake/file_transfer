@@ -35,7 +35,7 @@ private:
         std::string path;
         std::string filename;
         std::string filetype;
-        void separate_filename(char*);
+        void separate_filename(std::string);
 
         unsigned int length;
 
@@ -56,6 +56,8 @@ public:
     {
         file_prop.path = fn;
         file_prop.fin.open(fn, std::ios_base::binary);
+
+        file_prop.separate_filename(fn);
 
         assert(file_prop.fin.is_open());
 

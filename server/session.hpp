@@ -22,29 +22,60 @@ private:
 
     boost::system::error_code ec;
 
+    struct
+    {
+        std::string path;
+        std::string filename;
+        std::string filetype;
+
+        unsigned int length;
+
+        char* file;
+    } file_prop;
+
+    boost::asio::mutable_buffer file_data;
     boost::asio::streambuf buffer;
 
-    void read();
+    template <typename T>
+    void read(T);
 
-    void write();
+    void write(std::string);
 
-    /*
-        if you need to send data to client
-        void input_data();
-    */
-    void output_data();
+    void input_data(std::string);
+
+    void get_file();
+    void get_file_prop();
+
+    void check_access();
 public:
     Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket)) 
     {
     }
 
-    void read_write_cycle()
+    void start()
     {
-        read();
+        get_file_prop();
     }
 
     ~Session() 
     { }
 }; 
+
+template <typename T>
+void Session::read(T data)
+{
+    boost::asio::read_until(socket_, data, boost::asio::transfer_all(), ec);
+
+    if (ec && ec != boost::asio::error::eof)
+    {   
+        write("Server: error");
+        std::cerr << "Session::read error: " << ec.message() << std::endl;
+    }
+    else
+    {
+        write("Message transferred");
+        std::cout << "Transferring completed" << std::endl;
+    }
+}
 
 #endif /* SESSION_HPP_ */

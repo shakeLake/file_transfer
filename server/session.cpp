@@ -1,22 +1,8 @@
 #include "session.hpp"
 
-void Session::read()
+void Session::write(std::string message)
 {
-    boost::asio::read_until(socket_, buffer, '\n', ec);
-
-    if (ec && ec != boost::asio::error::eof)
-        std::cerr << "Session::read error: " << ec.message() << std::endl;
-
-    output_data();
-
-    buffer.consume( buffer.size() );
-
-    // write();
-}
-
-void Session::write()
-{
-    // input_data();
+    input_data(message);
 
         boost::asio::async_write(socket_, buffer.data(),
             [](const boost::system::error_code& error, std::size_t bytes_transferred)
@@ -33,51 +19,70 @@ void Session::write()
         );
 
     buffer.consume( buffer.size() );
-
-    read();
 }
 
-void Session::output_data()
+void Session::get_file_prop()
+{   
+    read<boost::asio::mutable_buffer>(file_data);
+
+    std::array<std::string, 3> file_properties = static_cast< std::array<std::string, 3> >(file_data.data());
+
+    file_prop.filename = file_properties[0];
+    file_prop.filetype = file_properties[1];
+    file_prop.length =  std::stoi(file_properties[2]);
+
+    check_access();
+
+    buffer.consume( file_data.size() );
+}
+
+void Session::get_file()
 {
+    read<boost::asio::streambuf>(buffer);
+
     std::istream is(&buffer);
 
-    char* file = new char[/* */];
+    char* file = new char[file_prop.length];
 
     is >> file;
 
     std::ofstream fout;
-    fout.open("test.jpg", std::ios_base::binary);
 
-    assert(fout.is_open() == 1);
+    std::string full_name = file_prop.filename + '.' + file_prop.filetype;
+    fout.open(full_name, std::ios_base::binary);
 
-    fout.write(file, /* */);
+    assert(fout.is_open());
 
+    fout.write(file, file_prop.length);
+
+    buffer.consume( buffer.size() );
     delete [] file;
-
     fout.close();
 }
 
-/*
-void Session::input_data(std::string data)
+void Session::input_data(std::string status_message)
 {
-    // read and save to array
-    std::ifstream fin;
-    fin.open(filename, std::ios_base::binary);
-
-    fin.seekg(0, fin.end);
-    int length = fin.tellg();
-    fin.seekg(0, fin.beg);
-
-    char* file = new char[length];
-
-    fin.read(file, length);
-
-    // save file to streambuffer
     std::ostream os(&buffer);
 
-    os << file;
-
-    delete [] file;
-    fin.close();
+    os << (status_message += '#');
 }
-*/
+
+void Session::check_access()
+{
+    std::cout << "File properties: " << std::endl;
+    std::cout << "File name: " << file_prop.filename << std::endl;
+    std::cout << "File type: " << file_prop.filetype << std::endl;
+    std::cout << "File length: " << file_prop.length << std::endl;
+
+    char status;
+    std::cout << "Do you want to get this file: (y/n) " << std::endl;
+    std::cin >> status;
+
+    if (status == 'n')
+    {
+        socket_.close();
+        std::cout << "Socket is closed" << std::endl;
+    }
+    else
+        get_file();
+}

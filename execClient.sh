@@ -3,4 +3,4 @@ cmake .
 clear
 cd client
 make
-./start
+./start "/home/mark/Desktop/11.jpg"
