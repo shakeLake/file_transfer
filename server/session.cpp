@@ -21,9 +21,37 @@ void Session::write(std::string message)
     buffer.consume( buffer.size() );
 }
 
+void Session::read_file_properties()
+{
+    boost::asio::read(socket_, file_data, boost::asio::transfer_all(), ec);
+
+    if (ec && ec != boost::asio::error::eof)
+        std::cerr << "Session::read error: " << ec.message() << std::endl;
+    
+    assert( file_data.size() > 0 );
+}
+
+void Session::read_file()
+{
+    std::cout << "read_file" << std::endl;
+
+    boost::asio::read(socket_, buffer, boost::asio::transfer_all(), ec);
+
+    if (ec && ec != boost::asio::error::eof)
+    {   
+        // write("Server: error");
+        std::cerr << "Session::read error: " << ec.message() << std::endl;
+    }
+    else
+    {
+        // write("Message transferred");
+        std::cout << "Transferring completed" << std::endl;
+    }
+}
+
 void Session::get_file_prop()
 {   
-    read<boost::asio::mutable_buffer>(file_data);
+    read_file_properties();
 
     std::array<std::string, 3>* file_properties = static_cast<std::array<std::string, 3>*>(file_data.data());
 
@@ -36,7 +64,7 @@ void Session::get_file_prop()
 
 void Session::get_file()
 {
-    read<boost::asio::streambuf*>(&buffer); // HEREHEREHEREHEREHEREHEREHERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    read_file();
 
     std::istream is(&buffer);
 
@@ -78,9 +106,12 @@ void Session::check_access()
 
     if (status == 'n')
     {
-        socket_.close();
         std::cout << "Socket is closed" << std::endl;
+        socket_.close();
     }
     else
+    {
+        //write("yes");
         get_file();
+    }
 }

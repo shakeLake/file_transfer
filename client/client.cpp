@@ -9,7 +9,7 @@ bool Client::connect()
     }
 
     boost::asio::connect(socket_, r.resolve(q, ec),
-        [](const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint& next)
+        [this](const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint& next)
         {      
             if (ec)
             {
@@ -23,6 +23,8 @@ bool Client::connect()
             }
         }
     );
+
+    send_file_prop(); // Program Start Here!
 
     return socket_.is_open();
 }
@@ -63,7 +65,7 @@ void Client::Properties::separate_filename(std::string fn)
     }
 }
 
-void Client::read()
+std::string Client::read()
 {
     boost::asio::read_until(socket_, buffer, '#', ec);
 
@@ -76,17 +78,22 @@ void Client::read()
     
     getline(is, status_message, '#');
 
-    buffer.consume( buffer.size() );
+    return status_message;
 }
 
-void Client::input_file_prop()
+void Client::send_file_prop()
 {
     std::array<std::string, 3> file_properties = {file_prop.filename, file_prop.filetype, std::to_string( file_prop.length )};
 
     write<boost::asio::mutable_buffer> ( boost::asio::buffer(file_properties) );
+
+    //if (read() == "yes")
+    send_file();
+
+    buffer.consume( buffer.size() );
 }
 
-void Client::input_file()
+void Client::send_file()
 {
     file_prop.fin.read(file_prop.file, file_prop.length);
 
@@ -96,6 +103,9 @@ void Client::input_file()
 
     write< boost::asio::const_buffer > (buffer.data());
 
+    //std::cout << read() << std::endl;
+
+    buffer.consume( buffer.size() );
     delete [] file_prop.file;
     file_prop.fin.close();
 }

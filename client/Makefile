@@ -131,18 +131,18 @@ client/fast:
 .PHONY : client/fast
 
 # Convenience name for target.
-client/CMakeFiles/start.dir/rule:
-	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/CMakeFiles/start.dir/rule
-.PHONY : client/CMakeFiles/start.dir/rule
+client/CMakeFiles/startClient.dir/rule:
+	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/CMakeFiles/startClient.dir/rule
+.PHONY : client/CMakeFiles/startClient.dir/rule
 
 # Convenience name for target.
-start: client/CMakeFiles/start.dir/rule
-.PHONY : start
+startClient: client/CMakeFiles/startClient.dir/rule
+.PHONY : startClient
 
 # fast build rule for target.
-start/fast:
-	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/build
-.PHONY : start/fast
+startClient/fast:
+	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/startClient.dir/build.make client/CMakeFiles/startClient.dir/build
+.PHONY : startClient/fast
 
 client.o: client.cpp.o
 .PHONY : client.o
@@ -173,7 +173,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/main.cpp.o
+	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/startClient.dir/build.make client/CMakeFiles/startClient.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -181,7 +181,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/main.cpp.i
+	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/startClient.dir/build.make client/CMakeFiles/startClient.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -189,7 +189,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/main.cpp.s
+	cd /home/mark/Desktop/data/geass/csc && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/startClient.dir/build.make client/CMakeFiles/startClient.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -201,7 +201,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
-	@echo "... start"
+	@echo "... startClient"
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"

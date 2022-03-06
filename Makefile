@@ -130,17 +130,17 @@ client/fast:
 .PHONY : client/fast
 
 #=============================================================================
-# Target rules for targets named start
+# Target rules for targets named startClient
 
 # Build rule for target.
-start: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 start
-.PHONY : start
+startClient: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 startClient
+.PHONY : startClient
 
 # fast build rule for target.
-start/fast:
-	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/start.dir/build.make client/CMakeFiles/start.dir/build
-.PHONY : start/fast
+startClient/fast:
+	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/startClient.dir/build.make client/CMakeFiles/startClient.dir/build
+.PHONY : startClient/fast
 
 #=============================================================================
 # Target rules for targets named serverLib
@@ -178,7 +178,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... client"
 	@echo "... serverLib"
-	@echo "... start"
+	@echo "... startClient"
 	@echo "... startServer"
 .PHONY : help
 

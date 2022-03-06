@@ -70,7 +70,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "client/CMakeFiles/client.dir/DependInfo.cmake"
-  "client/CMakeFiles/start.dir/DependInfo.cmake"
+  "client/CMakeFiles/startClient.dir/DependInfo.cmake"
   "server/CMakeFiles/serverLib.dir/DependInfo.cmake"
   "server/CMakeFiles/startServer.dir/DependInfo.cmake"
   )

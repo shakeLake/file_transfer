@@ -44,22 +44,22 @@ private:
         std::ifstream fin;
     } file_prop;
 
-    void read();
+    std::string read();
 
     template <typename T>
     void write(T);
 
-    void input_file();
-    void input_file_prop();
+    void send_file();
+    void send_file_prop();
 public:
     Client(std::string host, std::string port, char* fn) : r(io_c), q(host, port), socket_(io_c)
     {
         file_prop.path = fn;
-        file_prop.fin.open(fn, std::ios_base::binary);
-
-        file_prop.separate_filename(fn);
+        file_prop.fin.open(file_prop.path, std::ios_base::binary);
 
         assert(file_prop.fin.is_open());
+
+        file_prop.separate_filename(fn);
 
         file_prop.fin.seekg(0, file_prop.fin.end);
         file_prop.length = file_prop.fin.tellg();
@@ -80,14 +80,11 @@ public:
 template <typename T>
 void Client::write(T data)
 {
+    std::cout << "write" << std::endl;
     boost::asio::write(socket_, data, boost::asio::transfer_all(), ec);
 
-    if (ec)
+    if (ec && ec != boost::asio::error::eof)
         std::cerr << "Client::write error: " << ec.message() << std::endl;
-
-    buffer.consume( buffer.size() );
-
-    read();
 }
 
 #endif /* CLIENT_HPP_ */

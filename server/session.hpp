@@ -11,6 +11,7 @@
 // data
 #include <fstream>
 #include <cstring>
+#include <array>
 
 // assert
 #include <cassert>
@@ -36,15 +37,15 @@ private:
     boost::asio::mutable_buffer file_data;
     boost::asio::streambuf buffer;
 
-    template <typename T>
-    void read(T);
+    void read_file_properties();
+    void read_file();
 
     void write(std::string);
 
     void input_data(std::string);
 
-    void get_file();
     void get_file_prop();
+    void get_file();
 
     void check_access();
 public:
@@ -60,22 +61,5 @@ public:
     ~Session() 
     { }
 }; 
-
-template <typename T>
-void Session::read(T data)
-{
-    boost::asio::read(socket_, data, boost::asio::transfer_all(), ec);
-
-    if (ec && ec != boost::asio::error::eof)
-    {   
-        write("Server: error");
-        std::cerr << "Session::read error: " << ec.message() << std::endl;
-    }
-    else
-    {
-        write("Message transferred");
-        std::cout << "Transferring completed" << std::endl;
-    }
-}
 
 #endif /* SESSION_HPP_ */
