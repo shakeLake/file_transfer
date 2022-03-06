@@ -25,20 +25,18 @@ void Session::get_file_prop()
 {   
     read<boost::asio::mutable_buffer>(file_data);
 
-    std::array<std::string, 3> file_properties = static_cast< std::array<std::string, 3> >(file_data.data());
+    std::array<std::string, 3>* file_properties = static_cast<std::array<std::string, 3>*>(file_data.data());
 
-    file_prop.filename = file_properties[0];
-    file_prop.filetype = file_properties[1];
-    file_prop.length =  std::stoi(file_properties[2]);
+    file_prop.filename = file_properties->at(0);
+    file_prop.filetype = file_properties->at(1);
+    file_prop.length =  std::stoi(file_properties->at(2));
 
     check_access();
-
-    buffer.consume( file_data.size() );
 }
 
 void Session::get_file()
 {
-    read<boost::asio::streambuf>(buffer);
+    read<boost::asio::streambuf*>(&buffer); // HEREHEREHEREHEREHEREHEREHERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     std::istream is(&buffer);
 
@@ -72,7 +70,7 @@ void Session::check_access()
     std::cout << "File properties: " << std::endl;
     std::cout << "File name: " << file_prop.filename << std::endl;
     std::cout << "File type: " << file_prop.filetype << std::endl;
-    std::cout << "File length: " << file_prop.length << std::endl;
+    std::cout << "File length: " << file_prop.length << "bytes" << std::endl;
 
     char status;
     std::cout << "Do you want to get this file: (y/n) " << std::endl;

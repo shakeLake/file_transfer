@@ -64,7 +64,7 @@ public:
 template <typename T>
 void Session::read(T data)
 {
-    boost::asio::read_until(socket_, data, boost::asio::transfer_all(), ec);
+    boost::asio::read(socket_, data, boost::asio::transfer_all(), ec);
 
     if (ec && ec != boost::asio::error::eof)
     {   
