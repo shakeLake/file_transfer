@@ -21,8 +21,6 @@ class Session
 private:
     boost::asio::ip::tcp::socket socket_;
 
-    boost::system::error_code ec;
-
     struct
     {
         std::string path;

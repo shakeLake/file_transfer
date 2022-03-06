@@ -9,7 +9,7 @@ bool Client::connect()
     }
 
     boost::asio::connect(socket_, r.resolve(q, ec),
-        [this](const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint& next)
+        [](const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint& next)
         {      
             if (ec)
             {
@@ -31,9 +31,7 @@ bool Client::connect()
 
 void Client::Properties::separate_filename(std::string fn)
 {
-    unsigned short length = sizeof(fn) / sizeof(fn[0]);
-
-    unsigned short symb_counter = length;
+    unsigned short symb_counter = fn.size();
     while (fn[symb_counter] != '.')
     {
         filetype += fn[symb_counter];
@@ -85,12 +83,10 @@ void Client::send_file_prop()
 {
     std::array<std::string, 3> file_properties = {file_prop.filename, file_prop.filetype, std::to_string( file_prop.length )};
 
-    write<boost::asio::mutable_buffer> ( boost::asio::buffer(file_properties) );
+    write<boost::asio::mutable_buffer> (boost::asio::buffer(file_properties));
 
     //if (read() == "yes")
-    send_file();
-
-    buffer.consume( buffer.size() );
+    //send_file();
 }
 
 void Client::send_file()

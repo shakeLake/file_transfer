@@ -23,30 +23,30 @@ void Session::write(std::string message)
 
 void Session::read_file_properties()
 {
-    boost::asio::read(socket_, file_data, boost::asio::transfer_all(), ec);
-
-    if (ec && ec != boost::asio::error::eof)
-        std::cerr << "Session::read error: " << ec.message() << std::endl;
+    socket_.async_read_some(file_data, boost::asio::transfer_all(), 
+        [](const boost::system::error_code& ec, std::size_t bytes_transferred)
+        {
+            if (ec && ec != boost::asio::error::eof)
+                std::cerr << "Handler: " << ec.message() << std::endl;
+            else  
+                std::cout << "Bytes transferred: " << bytes_transferred << std::endl;
+        }
+    );
     
     assert( file_data.size() > 0 );
 }
 
 void Session::read_file()
 {
-    std::cout << "read_file" << std::endl;
-
-    boost::asio::read(socket_, buffer, boost::asio::transfer_all(), ec);
-
-    if (ec && ec != boost::asio::error::eof)
-    {   
-        // write("Server: error");
-        std::cerr << "Session::read error: " << ec.message() << std::endl;
-    }
-    else
-    {
-        // write("Message transferred");
-        std::cout << "Transferring completed" << std::endl;
-    }
+    boost::asio::async_read(socket_, buffer, boost::asio::transfer_all(), 
+        [](const boost::system::error_code& ec, std::size_t bytes_transferred)
+        {
+            if (ec && ec != boost::asio::error::eof)
+                std::cerr << "Handler: " << ec.message() << std::endl;
+            else  
+                std::cout << "Bytes transferred: " << bytes_transferred << std::endl;
+        }
+    );
 }
 
 void Session::get_file_prop()
@@ -59,7 +59,8 @@ void Session::get_file_prop()
     file_prop.filetype = file_properties->at(1);
     file_prop.length =  std::stoi(file_properties->at(2));
 
-    check_access();
+    // check_access();
+    //get_file();
 }
 
 void Session::get_file()

@@ -80,11 +80,12 @@ public:
 template <typename T>
 void Client::write(T data)
 {
-    std::cout << "write" << std::endl;
-    boost::asio::write(socket_, data, boost::asio::transfer_all(), ec);
+    unsigned int bytes_transferred = boost::asio::write(socket_, data, boost::asio::transfer_all(), ec);
+
+    std::cout << bytes_transferred << std::endl;
 
     if (ec && ec != boost::asio::error::eof)
-        std::cerr << "Client::write error: " << ec.message() << std::endl;
+        std::cerr << "Handler: " << ec.message() << std::endl;
 }
 
 #endif /* CLIENT_HPP_ */
