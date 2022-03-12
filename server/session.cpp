@@ -21,51 +21,59 @@ void Session::write(std::string message)
     buffer.consume( buffer.size() );
 }
 
-void Session::read_file_properties()
+void Session::read()
 {
-    socket_.async_read_some(file_data, boost::asio::transfer_all(), 
-        [](const boost::system::error_code& ec, std::size_t bytes_transferred)
-        {
-            if (ec && ec != boost::asio::error::eof)
-                std::cerr << "Handler: " << ec.message() << std::endl;
-            else  
-                std::cout << "Bytes transferred: " << bytes_transferred << std::endl;
-        }
-    );
-    
-    assert( file_data.size() > 0 );
+    unsigned int bytes_transferred = boost::asio::read(socket_, buffer, boost::asio::transfer_all(), ec);
+
+    if (ec && ec != boost::asio::error::eof)
+        std::cerr << "Handler : " << ec.message() << std::endl;
+    else
+        std::cout << '\n' << "bytes_transferred: " << bytes_transferred << std::endl;
 }
 
-void Session::read_file()
+void Session::separate_data(std::string data)
 {
-    boost::asio::async_read(socket_, buffer, boost::asio::transfer_all(), 
-        [](const boost::system::error_code& ec, std::size_t bytes_transferred)
+    std::string buffer_str[3];
+
+    for (unsigned short i = 0, j = 0; i != data.size(); i++)
+    {
+        if (data[i] != '#')
         {
-            if (ec && ec != boost::asio::error::eof)
-                std::cerr << "Handler: " << ec.message() << std::endl;
-            else  
-                std::cout << "Bytes transferred: " << bytes_transferred << std::endl;
+            buffer_str[j] += data[i];
         }
-    );
+        else
+        {
+            j += 1;
+        }
+    }
+
+    file_prop.filename = buffer_str[0];
+    file_prop.filetype = buffer_str[1];
+    file_prop.length = std::stoi( buffer_str[2] );
 }
 
 void Session::get_file_prop()
 {   
-    read_file_properties();
+    read();
 
-    std::array<std::string, 3>* file_properties = static_cast<std::array<std::string, 3>*>(file_data.data());
+    std::string file_properties;
 
-    file_prop.filename = file_properties->at(0);
-    file_prop.filetype = file_properties->at(1);
-    file_prop.length =  std::stoi(file_properties->at(2));
+    std::istream is(&buffer);
+    is >> file_properties;
 
-    // check_access();
-    //get_file();
+    separate_data(file_properties);
+
+    std::cout << '\n' << "File properties: " << std::endl;
+    std::cout << "File name: " << file_prop.filename << std::endl;
+    std::cout << "File type: " << file_prop.filetype << std::endl;
+    std::cout << "File size: " << file_prop.length << " bytes" << std::endl;
+
+    get_file();
 }
 
 void Session::get_file()
 {
-    read_file();
+    read();
 
     std::istream is(&buffer);
 
@@ -92,27 +100,4 @@ void Session::input_data(std::string status_message)
     std::ostream os(&buffer);
 
     os << (status_message += '#');
-}
-
-void Session::check_access()
-{
-    std::cout << "File properties: " << std::endl;
-    std::cout << "File name: " << file_prop.filename << std::endl;
-    std::cout << "File type: " << file_prop.filetype << std::endl;
-    std::cout << "File length: " << file_prop.length << "bytes" << std::endl;
-
-    char status;
-    std::cout << "Do you want to get this file: (y/n) " << std::endl;
-    std::cin >> status;
-
-    if (status == 'n')
-    {
-        std::cout << "Socket is closed" << std::endl;
-        socket_.close();
-    }
-    else
-    {
-        //write("yes");
-        get_file();
-    }
 }

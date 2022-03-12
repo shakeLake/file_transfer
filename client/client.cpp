@@ -24,6 +24,7 @@ bool Client::connect()
         }
     );
 
+    std::cout << "Connected" << std::endl;
     send_file_prop(); // Program Start Here!
 
     return socket_.is_open();
@@ -79,14 +80,29 @@ std::string Client::read()
     return status_message;
 }
 
+void Client::write()
+{
+    unsigned int bytes_transferred = boost::asio::write(socket_, buffer.data(), boost::asio::transfer_all(), ec);
+
+    if (ec && ec != boost::asio::error::eof)
+        std::cerr << "Handler : " << ec.message() << std::endl;
+    else
+        std::cout << '\n' << "bytes_transferred: " << bytes_transferred << std::endl;
+
+    buffer.consume( buffer.size() );
+}
+
 void Client::send_file_prop()
 {
-    std::array<std::string, 3> file_properties = {file_prop.filename, file_prop.filetype, std::to_string( file_prop.length )};
+    std::string file_properties = file_prop.filename + '#' + file_prop.filetype + '#' + std::to_string(file_prop.length) + '#';
 
-    write<boost::asio::mutable_buffer> (boost::asio::buffer(file_properties));
+    // save file properties to streambuffer
+    std::ostream os(&buffer);
+    os << file_properties;
 
-    //if (read() == "yes")
-    //send_file();
+    write();
+
+    send_file();
 }
 
 void Client::send_file()
@@ -97,11 +113,8 @@ void Client::send_file()
     std::ostream os(&buffer);
     os << file_prop.file;
 
-    write< boost::asio::const_buffer > (buffer.data());
+    write();
 
-    //std::cout << read() << std::endl;
-
-    buffer.consume( buffer.size() );
     delete [] file_prop.file;
     file_prop.fin.close();
 }

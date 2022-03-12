@@ -46,8 +46,7 @@ private:
 
     std::string read();
 
-    template <typename T>
-    void write(T);
+    void write();
 
     void send_file();
     void send_file_prop();
@@ -76,16 +75,5 @@ public:
         std::cout << "End" << std::endl;
     }
 };
-
-template <typename T>
-void Client::write(T data)
-{
-    unsigned int bytes_transferred = boost::asio::write(socket_, data, boost::asio::transfer_all(), ec);
-
-    std::cout << bytes_transferred << std::endl;
-
-    if (ec && ec != boost::asio::error::eof)
-        std::cerr << "Handler: " << ec.message() << std::endl;
-}
 
 #endif /* CLIENT_HPP_ */

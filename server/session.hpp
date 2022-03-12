@@ -21,6 +21,8 @@ class Session
 private:
     boost::asio::ip::tcp::socket socket_;
 
+    boost::system::error_code ec;
+
     struct
     {
         std::string path;
@@ -32,11 +34,9 @@ private:
         char* file;
     } file_prop;
 
-    boost::asio::mutable_buffer file_data;
     boost::asio::streambuf buffer;
 
-    void read_file_properties();
-    void read_file();
+    void read();
 
     void write(std::string);
 
@@ -45,7 +45,7 @@ private:
     void get_file_prop();
     void get_file();
 
-    void check_access();
+    void separate_data(std::string);
 public:
     Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket)) 
     {
