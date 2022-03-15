@@ -28,7 +28,8 @@ private:
 
     boost::asio::ip::tcp::resolver::query q;
 
-    boost::asio::streambuf buffer;
+    boost::asio::streambuf read_buffer;
+    boost::asio::streambuf write_buffer;
 
     struct Properties
     {
@@ -44,7 +45,7 @@ private:
         std::ifstream fin;
     } file_prop;
 
-    std::string read();
+    void read();
 
     void write();
 

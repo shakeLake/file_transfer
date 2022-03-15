@@ -1,34 +1,38 @@
 #include "session.hpp"
 
-void Session::write(std::string message)
-{
-    input_data(message);
+void Session::write()
+{   
+    std::cout<< '\n' << "write" << std::endl;
 
-        boost::asio::async_write(socket_, buffer.data(),
-            [](const boost::system::error_code& error, std::size_t bytes_transferred)
-            {
-                if (error)
-                {
-                    std::cerr << "Session::write error: " << error.message() << std::endl;
-                }
-                else
-                {
-                    std::cout << "Session::write bytes transferred: " << bytes_transferred << std::endl;
-                }
-            }
-        );
+    std::ostream os(&write_buffer);
+    os << "File properties received\n";
 
-    buffer.consume( buffer.size() );
-}
-
-void Session::read()
-{
-    unsigned int bytes_transferred = boost::asio::read(socket_, buffer, boost::asio::transfer_all(), ec);
+    unsigned int bytes_transferred = boost::asio::write(socket_, write_buffer.data(), boost::asio::transfer_all(), ec);
 
     if (ec && ec != boost::asio::error::eof)
         std::cerr << "Handler : " << ec.message() << std::endl;
     else
-        std::cout << '\n' << "bytes_transferred: " << bytes_transferred << std::endl;
+    {
+        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
+
+        write_buffer.consume( write_buffer.size() );
+    }
+}
+
+void Session::read()
+{
+    std::cout << '\n' << "read" << std::endl;
+
+    unsigned int bytes_transferred =  boost::asio::read(socket_, read_buffer, boost::asio::transfer_all(), ec);
+
+    if (ec && ec != boost::asio::error::eof)
+        std::cerr << "Handler : " << ec.message() << std::endl;
+    else
+    {
+        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
+
+        write();
+    }
 }
 
 void Session::separate_data(std::string data)
@@ -58,7 +62,7 @@ void Session::get_file_prop()
 
     std::string file_properties;
 
-    std::istream is(&buffer);
+    std::istream is(&read_buffer);
     is >> file_properties;
 
     separate_data(file_properties);
@@ -68,6 +72,8 @@ void Session::get_file_prop()
     std::cout << "File type: " << file_prop.filetype << std::endl;
     std::cout << "File size: " << file_prop.length << " bytes" << std::endl;
 
+    read_buffer.consume( read_buffer.size() );
+
     get_file();
 }
 
@@ -75,7 +81,9 @@ void Session::get_file()
 {
     read();
 
-    std::istream is(&buffer);
+    assert(read_buffer.size() > 0);
+
+    std::istream is(&read_buffer);
 
     char* file = new char[file_prop.length];
 
@@ -90,14 +98,7 @@ void Session::get_file()
 
     fout.write(file, file_prop.length);
 
-    buffer.consume( buffer.size() );
+    read_buffer.consume( read_buffer.size() );
     delete [] file;
     fout.close();
-}
-
-void Session::input_data(std::string status_message)
-{
-    std::ostream os(&buffer);
-
-    os << (status_message += '#');
 }

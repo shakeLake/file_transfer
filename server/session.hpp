@@ -16,6 +16,8 @@
 // assert
 #include <cassert>
 
+#include <chrono>
+
 class Session
 {
 private:
@@ -34,13 +36,12 @@ private:
         char* file;
     } file_prop;
 
-    boost::asio::streambuf buffer;
+    boost::asio::streambuf read_buffer;
+    boost::asio::streambuf write_buffer;
 
     void read();
 
-    void write(std::string);
-
-    void input_data(std::string);
+    void write();
 
     void get_file_prop();
     void get_file();

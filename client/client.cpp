@@ -64,32 +64,46 @@ void Client::Properties::separate_filename(std::string fn)
     }
 }
 
-std::string Client::read()
+void Client::read()
 {
-    boost::asio::read_until(socket_, buffer, '#', ec);
+    std::cout << '\n' << "read" << std::endl;
+
+    unsigned int bytes_transferred = boost::asio::read(socket_, read_buffer, boost::asio::transfer_all(), ec);
 
     if (ec && ec != boost::asio::error::eof)
         std::cerr << "Client::read error: " << ec.message() << std::endl;
+    else
+    {
+        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
 
-    // get data from buffer
-    std::istream is(&buffer);
-    std::string status_message;
-    
-    getline(is, status_message, '#');
+        // get data from buffer
+        std::istream is(&read_buffer);
+        std::string status_message;
 
-    return status_message;
+        is >> status_message;
+
+        std::cout << status_message << std::endl;
+
+        read_buffer.consume( read_buffer.size() );
+    }
 }
 
 void Client::write()
 {
-    unsigned int bytes_transferred = boost::asio::write(socket_, buffer.data(), boost::asio::transfer_all(), ec);
+    std::cout << '\n' << "write" << std::endl;
+
+    unsigned int bytes_transferred = boost::asio::write(socket_, write_buffer.data(), ec);
 
     if (ec && ec != boost::asio::error::eof)
         std::cerr << "Handler : " << ec.message() << std::endl;
     else
-        std::cout << '\n' << "bytes_transferred: " << bytes_transferred << std::endl;
+    {
+        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
 
-    buffer.consume( buffer.size() );
+        write_buffer.consume( write_buffer.size() );
+
+        read();
+    }
 }
 
 void Client::send_file_prop()
@@ -97,7 +111,7 @@ void Client::send_file_prop()
     std::string file_properties = file_prop.filename + '#' + file_prop.filetype + '#' + std::to_string(file_prop.length) + '#';
 
     // save file properties to streambuffer
-    std::ostream os(&buffer);
+    std::ostream os(&write_buffer);
     os << file_properties;
 
     write();
@@ -110,7 +124,7 @@ void Client::send_file()
     file_prop.fin.read(file_prop.file, file_prop.length);
 
     // save file to streambuffer
-    std::ostream os(&buffer);
+    std::ostream os(&write_buffer);
     os << file_prop.file;
 
     write();
