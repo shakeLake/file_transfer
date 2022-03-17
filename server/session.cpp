@@ -1,16 +1,40 @@
 #include "session.hpp"
 
+void Session::read()
+{
+    std::cout << '\n' << "read" << std::endl;
+
+    unsigned int bytes_transferred =  boost::asio::read(socket_, file_data, boost::asio::transfer_all(), ec);
+
+    std::cout << "Size: " << file_data.size() << std::endl;
+
+    if (ec && ec != boost::asio::error::eof)
+    {
+        std::cerr << "Handler : " << ec.message() << std::endl;
+        socket_.close();
+    }
+    else
+    {
+        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
+    }
+}
+
+/*
 void Session::write()
 {   
     std::cout<< '\n' << "write" << std::endl;
 
     std::ostream os(&write_buffer);
-    os << "File properties received\n";
+    std::string status = "File properties received";
+    os << status;
 
     unsigned int bytes_transferred = boost::asio::write(socket_, write_buffer.data(), boost::asio::transfer_all(), ec);
 
     if (ec && ec != boost::asio::error::eof)
+    {
         std::cerr << "Handler : " << ec.message() << std::endl;
+        socket_.close();
+    }
     else
     {
         std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
@@ -26,11 +50,14 @@ void Session::read()
     unsigned int bytes_transferred =  boost::asio::read(socket_, read_buffer, boost::asio::transfer_all(), ec);
 
     if (ec && ec != boost::asio::error::eof)
+    {
         std::cerr << "Handler : " << ec.message() << std::endl;
+        socket_.close();
+    }
     else
     {
         std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
-
+        
         write();
     }
 }
@@ -102,3 +129,4 @@ void Session::get_file()
     delete [] file;
     fout.close();
 }
+*/

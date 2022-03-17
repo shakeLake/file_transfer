@@ -12,6 +12,7 @@
 #include <fstream>
 #include <cstring>
 #include <array>
+#include <vector>
 
 // assert
 #include <cassert>
@@ -29,13 +30,16 @@ private:
     boost::asio::ip::tcp::resolver::query q;
 
     boost::asio::streambuf read_buffer;
-    boost::asio::streambuf write_buffer;
+
+    std::vector<boost::asio::const_buffer> file_data;
 
     struct Properties
     {
-        std::string path;
-        std::string filename;
-        std::string filetype;
+        const unsigned short filename_length = 50;
+        const unsigned short filetype_length = 10;
+
+        std::array<char, 50> filename;
+        std::array<char, 10> filetype;
         void separate_filename(std::string);
 
         unsigned int length;
@@ -50,12 +54,13 @@ private:
     void write();
 
     void send_file();
-    void send_file_prop();
 public:
     Client(std::string host, std::string port, char* fn) : r(io_c), q(host, port), socket_(io_c)
     {
-        file_prop.path = fn;
-        file_prop.fin.open(file_prop.path, std::ios_base::binary);
+        file_prop.filename[30];
+        file_prop.filetype[20];
+
+        file_prop.fin.open(fn, std::ios_base::binary);
 
         assert(file_prop.fin.is_open());
 
@@ -66,13 +71,24 @@ public:
         file_prop.fin.seekg(0, file_prop.fin.beg);
 
         file_prop.file = new char[file_prop.length];
+
+        file_prop.fin.read(file_prop.file, file_prop.length);
+
+        file_data.push_back( boost::asio::buffer(file_prop.filename) );
+        file_data.push_back( boost::asio::buffer(file_prop.filetype) );
+        file_data.push_back( file_prop.file );
     }
 
     bool connect();
 
     ~Client() 
     {
+        delete [] file_prop.file;
+
+        file_prop.fin.close();
+
         io_c.run();
+
         std::cout << "End" << std::endl;
     }
 };
