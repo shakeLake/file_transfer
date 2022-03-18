@@ -44,6 +44,7 @@ private:
 
         unsigned int length;
 
+        std::string str_file;
         char* file;
 
         std::ifstream fin;
@@ -68,7 +69,7 @@ public:
 
         file_prop.file = new char[file_prop.length];
 
-        std::string file_properties = file_prop.filename + '#' + file_prop.filetype + '#' + std::to_string(file_prop.length) + '#';
+        std::string file_properties = file_prop.filename + '#' + file_prop.filetype + '#' + std::to_string(file_prop.length) + '*';
 
         // save file properties to streambuffer
         std::ostream os_file_prop(&write_buffer);
@@ -77,10 +78,12 @@ public:
         file_prop.fin.read(file_prop.file, file_prop.length);
 
         // save file to streambuffer
-        std::ostream os_file(&write_file_buffer);
-        os_file << file_prop.file;
+        file_prop.str_file.resize(file_prop.length);
+        for (unsigned int i = 0; i != file_prop.length; i++)
+            file_prop.str_file[i] = file_prop.file[i];
 
-        std::cout << file_prop.length << std::endl;
+        std::ostream os_file(&write_file_buffer);
+        os_file << file_prop.str_file;
     }
 
     bool connect();

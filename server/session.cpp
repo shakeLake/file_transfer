@@ -22,11 +22,11 @@ void Session::write()
     }
 }
 
-void Session::read()
+void Session::read_prop()
 {
     std::cout << '\n' << "read" << std::endl;
 
-    unsigned int bytes_transferred =  boost::asio::read(socket_, read_buffer, boost::asio::transfer_all(), ec);
+    unsigned int bytes_transferred =  boost::asio::read_until(socket_, read_buffer, '*', ec);
 
     if (ec && ec != boost::asio::error::eof)
     {
@@ -36,16 +36,14 @@ void Session::read()
     else
     {
         std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
-
-        read_file();
     }
 }
 
 void Session::read_file()
 {
-    std::cout << '\n' << "read_file" << std::endl;
+    std::cout << '\n' << "read" << std::endl;
 
-    unsigned int bytes_transferred =  boost::asio::read(socket_, read_file_buffer, boost::asio::transfer_all(), ec);
+    unsigned int bytes_transferred =  boost::asio::read(socket_, read_file_buffer, boost::asio::transfer_exactly(file_prop.length), ec);
 
     if (ec && ec != boost::asio::error::eof)
     {
@@ -81,7 +79,7 @@ void Session::separate_data(std::string data)
 
 void Session::get_file_prop()
 {   
-    read();
+    read_prop();
 
     std::string file_properties;
 
@@ -94,20 +92,25 @@ void Session::get_file_prop()
     std::cout << "File name: " << file_prop.filename << std::endl;
     std::cout << "File type: " << file_prop.filetype << std::endl;
     std::cout << "File size: " << file_prop.length << " bytes" << std::endl;
-    std::cout << '\n';
 
     get_file();
 }
 
 void Session::get_file()
 {
+    read_file();
+    
     assert(read_file_buffer.size() > 0);
 
     std::istream is(&read_file_buffer);
 
-    char* file = new char[file_prop.length];
+    file_prop.str_file.resize(file_prop.length);
 
-    is >> file;
+    file_prop.file = new char[file_prop.length];
+    is >> file_prop.str_file;
+
+    for (unsigned int i = 0; i != file_prop.length; i++)
+        file_prop.file[i] = file_prop.str_file[i];
 
     std::ofstream fout;
 
@@ -116,9 +119,8 @@ void Session::get_file()
 
     assert(fout.is_open());
 
-    fout.write(file, file_prop.length);
+    fout.write(file_prop.file, file_prop.length);
 
-    read_buffer.consume( read_buffer.size() );
-    delete [] file;
+    delete [] file_prop.file;
     fout.close();
 }

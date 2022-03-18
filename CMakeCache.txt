@@ -20,6 +20,8 @@ Boost_DIR:PATH=/usr/lib64/cmake/Boost-1.78.0
 //Path to a file.
 Boost_INCLUDE_DIR:PATH=/usr/include
 
+Boost_REGEX_LIBRARY_RELEASE:STRING=/usr/lib/libboost_regex.so.1.78.0
+
 Boost_SYSTEM_LIBRARY_RELEASE:STRING=/usr/lib/libboost_system.so.1.78.0
 
 Boost_THREAD_LIBRARY_RELEASE:STRING=/usr/lib/libboost_thread.so.1.78.0
@@ -234,6 +236,9 @@ boost_COMPPONENTS_DIR:PATH=boost_COMPPONENTS_DIR-NOTFOUND
 //The directory containing a CMake configuration file for boost_headers.
 boost_headers_DIR:PATH=/usr/lib64/cmake/boost_headers-1.78.0
 
+//The directory containing a CMake configuration file for boost_regex.
+boost_regex_DIR:PATH=/usr/lib64/cmake/boost_regex-1.78.0
+
 //The directory containing a CMake configuration file for boost_system.
 boost_system_DIR:PATH=/usr/lib64/cmake/boost_system-1.78.0
 
@@ -422,6 +427,8 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/lib64/cmake/Boost-1.78.0/BoostConfig.cmake][cfound components: system thread ][v1.78.0(1.78)]
 //ADVANCED property for variable: boost_headers_DIR
 boost_headers_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: boost_regex_DIR
+boost_regex_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: boost_system_DIR
 boost_system_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: boost_thread_DIR

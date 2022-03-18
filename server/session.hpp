@@ -16,8 +16,6 @@
 // assert
 #include <cassert>
 
-#include <unistd.h>
-
 class Session
 {
 private:
@@ -33,6 +31,7 @@ private:
 
         unsigned int length;
 
+        std::string str_file;
         char* file;
     } file_prop;
 
@@ -41,7 +40,7 @@ private:
 
     boost::asio::streambuf write_buffer;
 
-    void read();
+    void read_prop();
     void read_file();
 
     void write();
@@ -51,7 +50,7 @@ private:
 
     void separate_data(std::string);
 public:
-    Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket)) 
+    Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket))
     { }
 
     void start()

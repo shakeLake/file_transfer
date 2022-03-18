@@ -107,7 +107,8 @@ void Client::write_prop()
     else
     {
         std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
-        //write_file();
+
+        write_file();
     }
 }
 
