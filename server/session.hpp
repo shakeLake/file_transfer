@@ -36,11 +36,13 @@ private:
         char* file;
     } file_prop;
 
-    boost::asio::const_buffer file_data;
+    boost::asio::streambuf read_buffer;
+    boost::asio::streambuf read_file_buffer;
 
     boost::asio::streambuf write_buffer;
 
     void read();
+    void read_file();
 
     void write();
 
@@ -54,7 +56,7 @@ public:
 
     void start()
     {
-        read();
+        get_file_prop();
     }
 
     ~Session() 

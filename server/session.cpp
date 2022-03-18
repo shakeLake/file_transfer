@@ -1,34 +1,13 @@
 #include "session.hpp"
 
-void Session::read()
-{
-    std::cout << '\n' << "read" << std::endl;
-
-    unsigned int bytes_transferred =  boost::asio::read(socket_, file_data, boost::asio::transfer_all(), ec);
-
-    std::cout << "Size: " << file_data.size() << std::endl;
-
-    if (ec && ec != boost::asio::error::eof)
-    {
-        std::cerr << "Handler : " << ec.message() << std::endl;
-        socket_.close();
-    }
-    else
-    {
-        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
-    }
-}
-
-/*
 void Session::write()
 {   
     std::cout<< '\n' << "write" << std::endl;
 
     std::ostream os(&write_buffer);
-    std::string status = "File properties received";
-    os << status;
+    os << "received";
 
-    unsigned int bytes_transferred = boost::asio::write(socket_, write_buffer.data(), boost::asio::transfer_all(), ec);
+    unsigned int bytes_transferred =  boost::asio::write(socket_, write_buffer.data(), boost::asio::transfer_all(), ec);
 
     if (ec && ec != boost::asio::error::eof)
     {
@@ -57,8 +36,25 @@ void Session::read()
     else
     {
         std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
-        
-        write();
+
+        read_file();
+    }
+}
+
+void Session::read_file()
+{
+    std::cout << '\n' << "read_file" << std::endl;
+
+    unsigned int bytes_transferred =  boost::asio::read(socket_, read_file_buffer, boost::asio::transfer_all(), ec);
+
+    if (ec && ec != boost::asio::error::eof)
+    {
+        std::cerr << "Handler : " << ec.message() << std::endl;
+        socket_.close();
+    }
+    else
+    {
+        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
     }
 }
 
@@ -98,19 +94,16 @@ void Session::get_file_prop()
     std::cout << "File name: " << file_prop.filename << std::endl;
     std::cout << "File type: " << file_prop.filetype << std::endl;
     std::cout << "File size: " << file_prop.length << " bytes" << std::endl;
-
-    read_buffer.consume( read_buffer.size() );
+    std::cout << '\n';
 
     get_file();
 }
 
 void Session::get_file()
 {
-    read();
+    assert(read_file_buffer.size() > 0);
 
-    assert(read_buffer.size() > 0);
-
-    std::istream is(&read_buffer);
+    std::istream is(&read_file_buffer);
 
     char* file = new char[file_prop.length];
 
@@ -129,4 +122,3 @@ void Session::get_file()
     delete [] file;
     fout.close();
 }
-*/

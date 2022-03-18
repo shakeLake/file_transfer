@@ -17,6 +17,8 @@
 // assert
 #include <cassert>
 
+#include <chrono>
+
 class Client
 {
 private:
@@ -31,15 +33,13 @@ private:
 
     boost::asio::streambuf read_buffer;
 
-    std::vector<boost::asio::const_buffer> file_data;
+    boost::asio::streambuf write_buffer;
+    boost::asio::streambuf write_file_buffer;
 
     struct Properties
     {
-        const unsigned short filename_length = 50;
-        const unsigned short filetype_length = 10;
-
-        std::array<char, 50> filename;
-        std::array<char, 10> filetype;
+        std::string filename;
+        std::string filetype;
         void separate_filename(std::string);
 
         unsigned int length;
@@ -51,15 +51,11 @@ private:
 
     void read();
 
-    void write();
-
-    void send_file();
+    void write_prop();
+    void write_file();
 public:
     Client(std::string host, std::string port, char* fn) : r(io_c), q(host, port), socket_(io_c)
     {
-        file_prop.filename[30];
-        file_prop.filetype[20];
-
         file_prop.fin.open(fn, std::ios_base::binary);
 
         assert(file_prop.fin.is_open());
@@ -72,24 +68,32 @@ public:
 
         file_prop.file = new char[file_prop.length];
 
+        std::string file_properties = file_prop.filename + '#' + file_prop.filetype + '#' + std::to_string(file_prop.length) + '#';
+
+        // save file properties to streambuffer
+        std::ostream os_file_prop(&write_buffer);
+        os_file_prop << file_properties;
+
         file_prop.fin.read(file_prop.file, file_prop.length);
 
-        file_data.push_back( boost::asio::buffer(file_prop.filename) );
-        file_data.push_back( boost::asio::buffer(file_prop.filetype) );
-        file_data.push_back( file_prop.file );
+        // save file to streambuffer
+        std::ostream os_file(&write_file_buffer);
+        os_file << file_prop.file;
+
+        std::cout << file_prop.length << std::endl;
     }
 
     bool connect();
 
     ~Client() 
     {
-        delete [] file_prop.file;
-
         file_prop.fin.close();
+
+        delete [] file_prop.file;
 
         io_c.run();
 
-        std::cout << "End" << std::endl;
+        std::cout << '\n' << "End" << std::endl;
     }
 };
 
