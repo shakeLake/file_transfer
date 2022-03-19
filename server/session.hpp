@@ -37,8 +37,6 @@ private:
     boost::asio::streambuf read_buffer;
     boost::asio::streambuf read_file_buffer;
 
-    boost::asio::streambuf write_buffer;
-
     void read_prop();
     void read_file();
 

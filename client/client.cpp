@@ -65,33 +65,6 @@ void Client::Properties::separate_filename(std::string fn)
     }
 }
 
-void Client::read()
-{
-    std::cout << '\n' << "read" << std::endl;
-
-    unsigned int bytes_transferred = boost::asio::read(socket_, read_buffer, boost::asio::transfer_all(), ec);
-
-    if (ec && ec != boost::asio::error::eof)
-    {
-        std::cerr << "Client::read error: " << ec.message() << std::endl;
-        socket_.close();
-    }
-    else
-    {
-        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
-
-        // get data from buffer
-        std::istream is(&read_buffer);
-        std::string status_message;
-
-        is >> status_message;
-
-        std::cout << status_message << std::endl;
-
-        read_buffer.consume( read_buffer.size() );
-    }
-}
-
 void Client::write_prop()
 {
     std::cout << '\n' << "write" << std::endl;

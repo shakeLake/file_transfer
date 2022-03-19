@@ -1,27 +1,5 @@
 #include "session.hpp"
 
-void Session::write()
-{   
-    std::cout<< '\n' << "write" << std::endl;
-
-    std::ostream os(&write_buffer);
-    os << "received";
-
-    unsigned int bytes_transferred =  boost::asio::write(socket_, write_buffer.data(), boost::asio::transfer_all(), ec);
-
-    if (ec && ec != boost::asio::error::eof)
-    {
-        std::cerr << "Handler : " << ec.message() << std::endl;
-        socket_.close();
-    }
-    else
-    {
-        std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
-
-        write_buffer.consume( write_buffer.size() );
-    }
-}
-
 void Session::read_prop()
 {
     std::cout << '\n' << "read" << std::endl;
