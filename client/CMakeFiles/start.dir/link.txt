@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/start.dir/main.cpp.o -o start  libclient.a /usr/lib/libboost_system.so.1.78.0 /usr/lib/libboost_thread.so.1.78.0 -lpthread 

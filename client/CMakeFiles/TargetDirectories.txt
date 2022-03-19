@@ -1,4 +1,0 @@
-/home/mark/Desktop/data/geass/csc/client/CMakeFiles/client.dir
-/home/mark/Desktop/data/geass/csc/client/CMakeFiles/start.dir
-/home/mark/Desktop/data/geass/csc/client/CMakeFiles/edit_cache.dir
-/home/mark/Desktop/data/geass/csc/client/CMakeFiles/rebuild_cache.dir
