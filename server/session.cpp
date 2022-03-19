@@ -102,11 +102,9 @@ void Session::get_file()
     
     assert(read_file_buffer.size() == file_prop.length);
 
-    file_prop.file = new char[file_prop.length];;
-
-    std::istream is(&read_file_buffer);
-    std::string str_file;
-    is >> str_file;
+    file_prop.file = new char[file_prop.length];
+    
+    std::string str_file((std::istreambuf_iterator<char>(&read_file_buffer)), std::istreambuf_iterator<char>());
 
     for (unsigned int i = 0; i != file_prop.length; i++)
         file_prop.file[i] = str_file[i];

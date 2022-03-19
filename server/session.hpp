@@ -50,7 +50,8 @@ private:
     void separate_data(std::string);
 public:
     Session(boost::asio::ip::tcp::socket socket) : socket_(std::move(socket))
-    { }
+    {
+    }
 
     void start()
     {
