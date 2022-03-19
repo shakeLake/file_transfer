@@ -31,7 +31,6 @@ private:
 
         unsigned int length;
 
-        std::string str_file;
         char* file;
     } file_prop;
 
@@ -59,7 +58,10 @@ public:
     }
 
     ~Session() 
-    { }
+    {
+        read_buffer.consume( read_buffer.size() );
+        read_file_buffer.consume( read_file_buffer.size() );
+    }
 }; 
 
 #endif /* SESSION_HPP_ */

@@ -36,6 +36,9 @@ private:
     boost::asio::streambuf write_buffer;
     boost::asio::streambuf write_file_buffer;
 
+    // Construct a timer without setting an expiry time.
+    boost::asio::deadline_timer timer;
+
     struct Properties
     {
         std::string filename;
@@ -55,7 +58,7 @@ private:
     void write_prop();
     void write_file();
 public:
-    Client(std::string host, std::string port, char* fn) : r(io_c), q(host, port), socket_(io_c)
+    Client(std::string host, std::string port, char* fn) : r(io_c), q(host, port), socket_(io_c), timer(io_c)
     {
         file_prop.fin.open(fn, std::ios_base::binary);
 

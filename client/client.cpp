@@ -90,7 +90,6 @@ void Client::read()
 
         read_buffer.consume( read_buffer.size() );
     }
-
 }
 
 void Client::write_prop()
@@ -107,6 +106,12 @@ void Client::write_prop()
     else
     {
         std::cout << "bytes_transferred: " << bytes_transferred << std::endl;
+
+        // Set an expiry time relative to now.
+        timer.expires_from_now(boost::posix_time::milliseconds(1));
+
+        // Wait for the timer to expire.
+        timer.wait();
 
         write_file();
     }

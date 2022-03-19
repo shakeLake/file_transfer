@@ -43,7 +43,7 @@ void Session::read_file()
 {
     std::cout << '\n' << "read" << std::endl;
 
-    unsigned int bytes_transferred =  boost::asio::read(socket_, read_file_buffer, boost::asio::transfer_exactly(file_prop.length), ec);
+    unsigned int bytes_transferred =  boost::asio::read(socket_, read_file_buffer, boost::asio::transfer_all(), ec);
 
     if (ec && ec != boost::asio::error::eof)
     {
@@ -100,17 +100,16 @@ void Session::get_file()
 {
     read_file();
     
-    assert(read_file_buffer.size() > 0);
+    assert(read_file_buffer.size() == file_prop.length);
+
+    file_prop.file = new char[file_prop.length];;
 
     std::istream is(&read_file_buffer);
-
-    file_prop.str_file.resize(file_prop.length);
-
-    file_prop.file = new char[file_prop.length];
-    is >> file_prop.str_file;
+    std::string str_file;
+    is >> str_file;
 
     for (unsigned int i = 0; i != file_prop.length; i++)
-        file_prop.file[i] = file_prop.str_file[i];
+        file_prop.file[i] = str_file[i];
 
     std::ofstream fout;
 
