@@ -110,7 +110,6 @@ void Session::get_file()
         file_prop.file[i] = str_file[i];
 
     std::ofstream fout;
-
     std::string full_name = file_prop.filename + '.' + file_prop.filetype;
     fout.open(full_name, std::ios_base::binary);
 
