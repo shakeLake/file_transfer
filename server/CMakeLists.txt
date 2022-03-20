@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.2)
 
 project(server)
 
-set(CMAKE_BUILD_TYPE Debug)
-
 find_package(Boost 1.78 REQUIRED COMPONENTS system thread)
 
 add_library(serverLib server.cpp server.hpp session.cpp session.hpp)

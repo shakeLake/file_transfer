@@ -1,8 +1,6 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.2)
 
 project(client)
-
-set(CMAKE_BUILD_TYPE Debug)
 
 find_package(Boost 1.78 REQUIRED COMPONENTS system thread)
 

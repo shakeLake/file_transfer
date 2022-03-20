@@ -8,9 +8,6 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 
-// std::string
-#include <cstring>
-
 // headers
 #include "session.hpp"
 

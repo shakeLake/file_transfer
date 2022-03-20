@@ -1,7 +1,8 @@
 *.[oa]
-*.[sh]
 CMakeFiles/
 **/CMakeCache.txt
 **/Makefile
 **/typescript
 **/cmake_install.cmake
+/execClient.sh
+/execServer.sh

@@ -11,7 +11,6 @@
 // data
 #include <fstream>
 #include <cstring>
-#include <array>
 
 // assert
 #include <cassert>

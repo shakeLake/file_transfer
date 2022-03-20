@@ -7,17 +7,14 @@
 // boost
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
+#include <boost/asio/deadline_timer.hpp>
 
 // data
 #include <fstream>
 #include <cstring>
-#include <array>
-#include <vector>
 
 // assert
 #include <cassert>
-
-#include <chrono>
 
 class Client
 {

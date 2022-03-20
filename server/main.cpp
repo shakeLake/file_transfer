@@ -4,11 +4,11 @@ int main()
 {
     boost::asio::io_context io_c;
 
-    Server test(io_c);
+    Server one(io_c);
     
     std::cout << "Listening" << std::endl;
 
-    test.waiting();
+    one.waiting();
 
     io_c.run();
 

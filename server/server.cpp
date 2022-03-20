@@ -11,10 +11,7 @@ void Server::waiting()
                 std::make_shared<Session>(std::move(socket_))->start();
             }
             
-            /*
-                for multiple connections
-                waiting(); 
-            */
+            waiting(); 
         }
     );
 }
