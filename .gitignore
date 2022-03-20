@@ -1,6 +1,7 @@
-*.[oash]
+*.[oa]
+*.[sh]
 CMakeFiles/
-/CMakeCache.txt
-/cmake_install.cmake
-/Makefile
-/typescript
+**/CMakeCache.txt
+**/Makefile
+**/typescript
+**/cmake_install.cmake
