@@ -4,5 +4,3 @@ CMakeFiles/
 **/Makefile
 **/typescript
 **/cmake_install.cmake
-/execClient.sh
-/execServer.sh
