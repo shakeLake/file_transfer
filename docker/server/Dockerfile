@@ -16,7 +16,7 @@ RUN cd /home/ && tar -xzvf boost_1_81_0.tar.gz \
     && cd /home/ \
     && rm -rf boost_1_81_0
 
-ADD ./../ /csm
+ADD . /csm
 WORKDIR /csm
 
 RUN cmake -B "serverBuild" -S "server" \
